@@ -1,6 +1,6 @@
 {
     "name": "@bodynarf/utils",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": {
         "name": "Artem",
         "email": "bodynar@gmail.com"
@@ -13,5 +13,12 @@
         "url": "https://github.com/bodynar/bodynarf.utils/issues",
         "email": "bodynar@gmail.com"
     },
-    "keywords": ["js", "javascript", "ts", "typescript", "function", "common"]
+    "keywords": [
+        "js",
+        "javascript",
+        "ts",
+        "typescript",
+        "function",
+        "common"
+    ]
 }
