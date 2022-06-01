@@ -1,5 +1,5 @@
 {
-    "name": "@bodynar/utils",
+    "name": "@bodynarf/utils",
     "version": "1.0.4",
     "author": {
         "name": "Artem",
@@ -20,8 +20,5 @@
         "typescript",
         "function",
         "common"
-    ],
-    "publishConfig": {
-        "@bodynar:registry": "https://npm.pkg.github.com"
-    }
+    ]
 }
