@@ -20,5 +20,8 @@
         "typescript",
         "function",
         "common"
-    ]
+    ],
+    "publishConfig": {
+        "@bodynar:registry": "https://npm.pkg.github.com"
+    }
 }
