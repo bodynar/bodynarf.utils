@@ -22,6 +22,6 @@
         "common"
     ],
     "publishConfig": {
-        "@bodynarf:registry": "https://npm.pkg.github.com"
+        "@bodynar:registry": "https://npm.pkg.github.com"
     }
 }
