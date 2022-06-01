@@ -1,6 +1,6 @@
 {
     "name": "@bodynarf/utils",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "author": {
         "name": "Artem",
         "email": "bodynar@gmail.com"
@@ -22,6 +22,6 @@
         "common"
     ],
     "publishConfig": {
-        "@bodynar/utils:registry": "https://npm.pkg.github.com"
+        "@bodynar:registry": "https://npm.pkg.github.com"
     }
 }
