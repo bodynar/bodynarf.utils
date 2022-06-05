@@ -1,6 +1,6 @@
 {
     "name": "@bodynarf/utils",
-    "version": "1.0.5",
+    "version": "1.0.7",
     "author": {
         "name": "Artem",
         "email": "bodynar@gmail.com"
@@ -20,5 +20,12 @@
         "typescript",
         "function",
         "common"
-    ]
+    ],
+    "scripts": {
+        "build": "npx tsc",
+        "publish": "npx tsc && npm publish --access=public"
+    },
+    "devDependencies": {
+        "typescript": "^4.7.3"
+    }
 }
