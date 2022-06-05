@@ -1,4 +1,4 @@
-import { isNullOrEmpty, isStringEmpty } from "./common";
+import { isNullOrEmpty, isStringEmpty } from "../common";
 
 /** shortcut to local storage */
 const storage: Storage = window.localStorage;

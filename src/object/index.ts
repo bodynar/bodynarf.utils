@@ -1,4 +1,4 @@
-import { isStringEmpty, isNullOrUndefined } from "./common";
+import { isStringEmpty, isNullOrUndefined } from "../common";
 
 /**
  * Check is key declared in object. Throws errors if not

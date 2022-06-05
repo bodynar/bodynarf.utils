@@ -1,4 +1,4 @@
-import { isNullOrUndefined, isStringEmpty } from "./common";
+import { isNullOrUndefined, isStringEmpty } from "../common";
 
 /**
  * Build classname react element value from different values

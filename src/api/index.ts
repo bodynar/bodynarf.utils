@@ -30,7 +30,6 @@ export const post = async <TResult>(uri: string, requestData: RequestData): Prom
 /**
  * Gather data from specified api
  * @param uri Api endpoint address
- * @param requestData Request data
  * @returns {Promise<TResult>} Promise with api get result
  */
 export const get = async <TResult>(uri: string): Promise<TResult> => {
