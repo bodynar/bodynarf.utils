@@ -1,3 +1,5 @@
+import { isStringEmpty } from "../common";
+
 /** Request body data */
 export type RequestData = {
     [propertyName: string]: any;
@@ -13,9 +15,9 @@ export const statusCodesErrorsMap = new Map<number, string>([
  * Send data to api to process
  * @param uri Api endpoint address
  * @param requestData Request data
- * @returns {Promise<TResult>} Promise with api processing result
+ * @returns Promise with api processing result. If API returned empty response - will be `undefined`
  */
-export const post = async <TResult>(uri: string, requestData: RequestData): Promise<TResult> => {
+export const post = async <TResult extends object>(uri: string, requestData: RequestData): Promise<TResult | undefined> => {
     const requestParams: RequestInit = {
         method: 'POST',
         headers: {
@@ -24,7 +26,12 @@ export const post = async <TResult>(uri: string, requestData: RequestData): Prom
         body: JSON.stringify(requestData)
     };
 
-    return safeFetch<TResult>(uri, requestParams);
+    return safeFetch(uri, requestParams)
+        .then(x =>
+            isStringEmpty(x)
+                ? undefined
+                : JSON.parse(x) as TResult
+        );
 };
 
 /**
@@ -40,23 +47,24 @@ export const get = async <TResult>(uri: string): Promise<TResult> => {
         }
     };
 
-    return safeFetch<TResult>(uri, requestParams);
+    return safeFetch(uri, requestParams)
+        .then(x => JSON.parse(x) as TResult);
 };
 
 /**
  * Send configured http request to specified api with error handling
  * @param uri Uri addres to fetch
  * @param requestParams Request parameters
- * @returns Fetch result: error message or requested typed result
+ * @returns Fetch result: error message or response text
  */
-export const safeFetch = async <TResult>(uri: string, requestParams: RequestInit): Promise<TResult> => {
+export const safeFetch = async (uri: string, requestParams: RequestInit): Promise<string> => {
     try {
         const response: Response = await fetch(uri, requestParams);
 
         if (response.ok) {
-            const baseResponse: TResult = await response.json();
-            
-            return Promise.resolve(baseResponse);
+            const textResponse: string = await response.text();
+
+            return Promise.resolve(textResponse);
         } else {
             return Promise.reject(getErrorText(response));
         }

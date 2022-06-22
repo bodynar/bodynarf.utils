@@ -1,6 +1,6 @@
 {
     "name": "@bodynarf/utils",
-    "version": "1.0.10",
+    "version": "1.0.11",
     "author": {
         "name": "Artem",
         "email": "bodynar@gmail.com"
@@ -23,7 +23,7 @@
     ],
     "scripts": {
         "build": "npx tsc",
-        "publish": "npx tsc && copy package.json dist && cd dist && npm publish --access=public"
+        "publish_pkg": "npx tsc && copy package.json dist && cd dist && npm publish --access=public"
     },
     "devDependencies": {
         "typescript": "^4.7.3"
