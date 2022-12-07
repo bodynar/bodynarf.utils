@@ -9,6 +9,7 @@ export const getClassName = (partialNames: Array<string | undefined>): string =>
     return partialNames
         .filter(x => !isNullOrUndefined(x))
         .filter(x => !isStringEmpty(x!))
+        .filter((x, i, array) => array.indexOf(x) === i)
         .join(' ')
-    ;
+        ;
 };

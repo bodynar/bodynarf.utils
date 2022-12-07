@@ -53,7 +53,7 @@ const saveRecord = <TValue>(key: string, value: TValue): void => {
 };
 
 /** API to access local storage data */
-export const appStorage = {
+export const localStorage = {
     hasRecord,
     getRecord,
     saveRecord

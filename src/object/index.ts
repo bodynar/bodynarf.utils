@@ -8,7 +8,7 @@ import { isStringEmpty, isNullOrUndefined } from "../common";
  * @throws Parameter propertyName is not defined or empty string
  * @throws Specified key is not declared in object
  */
-export const ensurePropertyDefined = <T>(object: T, propertyName: string): void => {
+export const ensurePropertyDefined = <T extends object>(object: T, propertyName: string): void => {
     if (isNullOrUndefined(object)) {
         throw new Error("Parameter \"object\" is not defined.");
     }
@@ -21,6 +21,27 @@ export const ensurePropertyDefined = <T>(object: T, propertyName: string): void 
     if (!isKeyDefined) {
         throw new Error(`Key "${propertyName}" is not defined in object`);
     }
+};
+
+/**
+ * Get object property value with undefined fallback
+ * @param object Object-container with data values
+ * @param propertyName Name of property
+ * @returns Value stored by specified property in object if it is defined, otherwise - `undedined`
+ */
+export const getPropertyValue = <TResult>(object: Record<string, any>, propertyName: string): TResult | undefined => {
+    if (isNullOrUndefined(object)) {
+        throw new Error("Parameter \"object\" is not defined.");
+    }
+    if (isNullOrUndefined(propertyName) || isStringEmpty(propertyName)) {
+        throw new Error("Parameter \"propertyName\" is not defined");
+    }
+
+    const isKeyDefined: boolean = Object.keys(object).includes(propertyName);
+
+    return isKeyDefined
+        ? object[propertyName] as TResult
+        : undefined;
 };
 
 /**
