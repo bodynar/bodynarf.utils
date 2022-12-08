@@ -34,17 +34,3 @@ export const isUndefined = <T>(value: T): boolean => {
 export const getValueOrDefault = <TValue>(value: TValue | undefined, defaultValue: TValue): TValue => {
     return isNullOrUndefined(value) ? defaultValue : value!;
 };
-
-/**
- * Get value if it defined and use in string with format
- * @param value Probably not defined value
- * @param defaultValue Default value which should be returned in default case
- * @param formatString String with format. (e.g. "{0} world")
- * @returns Formatted string by value if it defined; otherwise - empty string
- */
-export const getEnumValueOrDefaultFormatted = <TEnum>(value: TEnum | undefined, defaultValue: TEnum, formatString: string): string => {
-    const valueOrDefault = getValueOrDefault(value, defaultValue);
-
-    return valueOrDefault === defaultValue ? "" : formatString.format(`${valueOrDefault}`);
-};
-
