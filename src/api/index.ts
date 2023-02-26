@@ -100,9 +100,14 @@ export const safeFetch = async (
         } else {
             return Promise.reject(getErrorText(response));
         }
-    } catch (error) {
+    } catch (error: any) {
         console.error(error);
-        return Promise.reject("Unexpected error.");
+        let errorMessage = "Unexpected error.";
+
+        if (error.name === "AbortError") {
+            errorMessage = `Request timeout after ${params!.timeout} ms`;
+        }
+        return Promise.reject(errorMessage);
     }
 };
 
