@@ -1,4 +1,5 @@
 export * from "./api";
+export * from "./array";
 export * from "./common";
 export * from "./component";
 export * from "./function";
