@@ -34,3 +34,18 @@ export const isUndefined = <T>(value: T): boolean => {
 export const getValueOrDefault = <TValue>(value: TValue | undefined, defaultValue: TValue): TValue => {
     return isNullOrUndefined(value) ? defaultValue : value!;
 };
+
+/**
+ * Check is object empty or consists of empty values
+ * @param object Object to check
+ * @returns `true` if object empty or contains null\undefined values
+ */
+export const isObjectEmpty = (object: any): boolean => {
+    if (isNullOrUndefined(object)) {
+        return true;
+    }
+
+    const result = new Array(Object.entries(object)).reduce((result, [value]) => isNullOrUndefined(value[1]) && result, true);
+
+    return result;
+};
