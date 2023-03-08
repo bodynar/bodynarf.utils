@@ -45,7 +45,11 @@ export const isObjectEmpty = (object: any): boolean => {
         return true;
     }
 
-    const result = new Array(Object.entries(object)).reduce((result, [value]) => isNullOrUndefined(value[1]) && result, true);
+    const result = Object.entries(object)
+        .reduce(
+            (result, [value]) => isNullOrUndefined(value[1]) && result
+            , true
+        );
 
     return result;
 };
