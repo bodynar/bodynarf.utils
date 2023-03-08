@@ -22,10 +22,10 @@ export const delayReject = <TResult>(time: number, error: string): Promise<TResu
  * Perform action after some delay specified in milliseconds
  * @param time Delay time in milliseconds
  * @param action Action to perform after delay
+ * @returns Number of delayed action to cancel via `clearTimeout`
  */
-export const withDelay = (time: number, action: Function): undefined => {
-    setTimeout(action, time);
-    return undefined;
+export const withDelay = (time: number, action: Function): number => {
+    return setTimeout(action, time);
 };
 
 /**

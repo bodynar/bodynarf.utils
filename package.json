@@ -1,6 +1,6 @@
 {
     "name": "@bodynarf/utils",
-    "version": "1.0.20",
+    "version": "1.1.1",
     "author": {
         "name": "Artem",
         "email": "bodynar@gmail.com"
@@ -19,7 +19,8 @@
         "ts",
         "typescript",
         "function",
-        "common"
+        "common",
+        "utilities"
     ],
     "scripts": {
         "build": "npx tsc",
