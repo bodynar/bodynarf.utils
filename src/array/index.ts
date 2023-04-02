@@ -97,7 +97,7 @@ if (isNullOrUndefined(Array.prototype.groupBy)) {
 
         const reduced = this.reduce((result, item) => {
             const value: any = item[key];
-            (result[value] = result[value] || []).push(value);
+            (result[value] = result[value] || []).push(item);
 
             return result;
         }, {} as Record<string, Array<TItem>>);
