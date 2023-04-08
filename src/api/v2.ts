@@ -30,7 +30,7 @@ export const safeFetch = async <TResult>(
         if (response.ok) {
             return Promise.resolve(result);
         } else {
-            result.error = getErrorText(response);
+            result.error = getErrorText(response, true);
 
             return Promise.reject(result);
         }
