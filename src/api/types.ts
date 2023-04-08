@@ -11,3 +11,24 @@ export interface RequestParams {
     */
     timeout?: number;
 };
+
+/** Result of fetching remote API */
+export interface ApiResult<TResult> {
+    /** Is request succeded */
+    success: boolean;
+
+    /** Response code */
+    code?: number;
+
+    /** Textual response status */
+    status?: string;
+
+    /** Occuried error */
+    error?: string;
+
+    /** Textual response */
+    response?: string;
+
+    /** Response converted from JSON to object */
+    responseObject?: TResult;
+}
