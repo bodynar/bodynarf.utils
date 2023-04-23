@@ -61,6 +61,12 @@ declare global {
          * @returns Array of groups, see `Group`
          */
         groupBy<T>(key: keyof T): Array<Group<T>>;
+
+        /**
+         * Remove border items that contains `null` or `undefined` values in specified key
+         * @param keySelector Key value selector
+         */
+        trimNotDefinedValuesBy<TKey>(keySelector: (item: T) => TKey): Array<T>;
     }
 }
 
@@ -113,5 +119,38 @@ if (isNullOrUndefined(Array.prototype.removeByKey)) {
     Array.prototype.removeByKey = function <TItem>(keys: Array<TItem[keyof TItem]>, key: keyof TItem): void {
         this.filter(item => !keys.includes(item[key]))
             .forEach(item => this.remove(item));
+    };
+}
+
+if (isNullOrUndefined(Array.prototype.trimNotDefinedValuesBy)) {
+    Array.prototype.trimNotDefinedValuesBy = function <T, TKey>(keySelector: (item: T) => TKey) {
+        const excludeIndexes: Array<number> = [];
+        let index = 0;
+
+        // eslint-disable-next-line no-constant-condition
+        while (true) {
+            const keyValue = keySelector(this[index]);
+
+            if (isNullOrUndefined(keyValue)) {
+                excludeIndexes.push(index++);
+            } else {
+                break;
+            }
+        }
+
+        index = this.length - 1;
+
+        // eslint-disable-next-line no-constant-condition
+        while (true) {
+            const keyValue = keySelector(this[index]);
+
+            if (isNullOrUndefined(keyValue)) {
+                excludeIndexes.push(index--);
+            } else {
+                break;
+            }
+        }
+
+        return this.filter((_, i) => !excludeIndexes.includes(i));
     };
 }
