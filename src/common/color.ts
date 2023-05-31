@@ -17,13 +17,13 @@ export interface Color {
  * @constant
  * Black color hex
  */
-export const blackHex: string = "#000";
+export const blackHex: string = "#000000";
 
 /**
  * @constant
  * White color hex
  */
-export const whiteHex: string = "#fff";
+export const whiteHex: string = "#ffffff";
 
 /**
  * Check is specified string value is rgb color
@@ -84,8 +84,21 @@ export function hexToRgb(hexColor: string): Color | undefined {
     if (hexColor.startsWith("#")) {
         hexColor = hexColor.substring(1);
     }
+
+    if (hexColor.length === 3) {
+        return {
+            red: parseInt(hexColor[0], 16),
+            green: parseInt(hexColor[1], 16),
+            blue: parseInt(hexColor[2], 16),
+        };
+    }
+
+    if (hexColor.length != 6) {
+        throw new Error("Color must be 3 or 6 symbols long");
+    }
+
     const aRgbHex: RegExpMatchArray =
-        hexColor.match(/.{1,2}/g)!;
+        hexColor.match(/.{2}/g)!;
 
     const rgb: Array<number> = [
         parseInt(aRgbHex[0], 16),
