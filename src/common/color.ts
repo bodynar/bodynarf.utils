@@ -3,13 +3,13 @@ import { isNullOrEmpty } from "./string";
 
 /** Color RGB model*/
 export interface Color {
-    /** Red intensivity */
+    /** Red intensity */
     red: number;
 
-    /** Green intensivity */
+    /** Green intensity */
     green: number;
 
-    /** Blue intensivity */
+    /** Blue intensity */
     blue: number;
 }
 
@@ -54,7 +54,7 @@ export function isHexColor(colorString: string): boolean {
 /**
  * Parse string value with rgb color to model
  * @param colorString String with rgb color presented as rgb()
- * @returns Rgb color model if parse is succeded; otherwise - `undefined`
+ * @returns Rgb color model if parse is succeeded; otherwise - `undefined`
  */
 export function getRgbColor(colorString: string): Color | undefined {
     if (isNullOrEmpty(colorString) || !isRgbColor(colorString)) {
@@ -74,7 +74,7 @@ export function getRgbColor(colorString: string): Color | undefined {
 /**
  * Parse string with hex color to model
  * @param hexColor String with hex color presented as #{hex}
- * @returns Rgb color model if parse is succeded; otherwise - `undefined`
+ * @returns Rgb color model if parse is succeeded; otherwise - `undefined`
  */
 export function hexToRgb(hexColor: string): Color | undefined {
     if (isNullOrEmpty(hexColor) || !isHexColor(hexColor)) {
@@ -98,6 +98,15 @@ export function hexToRgb(hexColor: string): Color | undefined {
         green: rgb[1],
         blue: rgb[2],
     };
+}
+
+/**
+ * Map rgb model to hex
+ * @param color color model
+ * @returns hex color
+ */
+export function rgbToHex({ red, green, blue }: Color): string {
+    return "#" + componentToHex(red) + componentToHex(green) + componentToHex(blue);
 }
 
 /**
@@ -131,4 +140,15 @@ export function getFontColor(color: Color): string {
         + color.blue * 0.114;
 
     return intensity > 125 ? blackHex : whiteHex;
+}
+
+/**
+ * Get hex from color component
+ * @param colorComponent Part of color (r, g, b)
+ * @returns Color component intensity in hex
+ */
+function componentToHex(colorComponent: number): string {
+    const hex = colorComponent.toString(16);
+
+    return hex.length == 1 ? "0" + hex : hex;
 }
