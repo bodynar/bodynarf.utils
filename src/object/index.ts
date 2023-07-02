@@ -27,7 +27,7 @@ export const ensurePropertyDefined = <T extends object>(object: T, propertyName:
  * Get object property value with undefined fallback
  * @param object Object-container with data values
  * @param propertyName Name of property
- * @returns Value stored by specified property in object if it is defined, otherwise - `undedined`
+ * @returns Value stored by specified property in object if it is defined, otherwise - `undefined`
  */
 export const getPropertyValue = <TResult>(object: Record<string, any>, propertyName: string): TResult | undefined => {
     if (isNullOrUndefined(object)) {

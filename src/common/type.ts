@@ -2,7 +2,7 @@ import { isNullOrUndefined } from "./checks";
 
 /**
  * Check is value has specified type
- * @param value Upcasted value
+ * @param value Up-casted value
  * @returns Value is specified Type
  */
 export const isType = <T>(value: any): value is T => {

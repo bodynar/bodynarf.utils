@@ -59,7 +59,7 @@ export const get = async <TResult>(
 
 /**
  * Send configured http request to specified api with error handling
- * @param uri Uri addres to fetch
+ * @param uri Uri address to fetch
  * @param requestParams Request parameters
  * @param params Additional request configuration
  * @returns Fetch result: error message or response text
@@ -92,7 +92,7 @@ export const safeFetch = async (
 
 /**
  * Fetch data by specified configuration
- * @param uri Uri addres to fetch
+ * @param uri Uri address to fetch
  * @param requestParams Request parameters
  * @param params Additional request configuration
  * @returns API response

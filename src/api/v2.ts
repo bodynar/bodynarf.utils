@@ -4,7 +4,7 @@ import { ApiResult, RequestParams, fetchApi, getErrorText } from ".";
 
 /**
  * Send configured http request to specified api with error handling
- * @param uri Uri addres to fetch
+ * @param uri Uri address to fetch
  * @param requestParams Request parameters
  * @param params Additional request configuration
  * @returns Promise with result of fetching API presented via complex object `ApiResult<TResult>>`
