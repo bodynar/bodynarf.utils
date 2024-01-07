@@ -14,7 +14,7 @@ export interface RequestParams {
 
 /** Result of fetching remote API */
 export interface ApiResult<TResult> {
-    /** Is request succeded */
+    /** Is request succeeded */
     success: boolean;
 
     /** Response code */
@@ -23,8 +23,11 @@ export interface ApiResult<TResult> {
     /** Textual response status */
     status?: string;
 
-    /** Occuried error */
-    error?: string;
+    /** Error short description */
+    errorShortMessage?: string;
+
+    /** Error */
+    error?: Error;
 
     /** Textual response */
     response?: string;

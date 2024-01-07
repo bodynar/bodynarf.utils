@@ -30,7 +30,7 @@ export const safeFetch = async <TResult>(
         if (response.ok) {
             return Promise.resolve(result);
         } else {
-            result.error = getErrorText(response, true);
+            result.errorShortMessage = getErrorText(response, true);
 
             return Promise.reject(result);
         }
@@ -42,7 +42,8 @@ export const safeFetch = async <TResult>(
             errorMessage = `Request timeout after ${params!.timeout} ms`;
         }
         return Promise.reject({
-            error: errorMessage,
+            errorShortMessage: errorMessage,
+            error,
         } as ApiResult<TResult>);
     }
 };
