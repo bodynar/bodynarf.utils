@@ -4,7 +4,7 @@ import { RequestData, RequestParams } from ".";
 
 /** Map of http status codes to errors */
 export const statusCodesErrorsMap = new Map<number, string>([
-    [404, "Server is not reachable."],
+    [404, "Server is not reachable."], // TODO: remove this map
     [415, "Server request failed: data is not valid."]
 ]);
 
