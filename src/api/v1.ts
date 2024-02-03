@@ -2,9 +2,12 @@ import { isNullOrUndefined, isStringEmpty } from "../common";
 
 import { RequestData, RequestParams } from ".";
 
-/** Map of http status codes to errors */
+/**
+ * Map of http status codes to errors
+ * @deprecated 1.2.0 | Do not use this useless map
+ */
 export const statusCodesErrorsMap = new Map<number, string>([
-    [404, "Server is not reachable."], // TODO: remove this map
+    [404, "Server is not reachable."],
     [415, "Server request failed: data is not valid."]
 ]);
 
@@ -59,6 +62,7 @@ export const get = async <TResult>(
 
 /**
  * Send configured http request to specified api with error handling
+ * @deprecated 1.2.0 | Use `safeFetch` from `v2`
  * @param uri Uri address to fetch
  * @param requestParams Request parameters
  * @param params Additional request configuration
@@ -128,6 +132,7 @@ export const fetchApi = async (
 
 /**
  * Get error message depending on http response
+ * @deprecated 1.2.0 | Do not use this useless fn
  * @param response Http response
  * @param suppressStateCheck Should `response.ok` check be suppressed in case of using v2
  * @returns Error message to display

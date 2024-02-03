@@ -23,7 +23,10 @@ export interface ApiResult<TResult> {
     /** Textual response status */
     status?: string;
 
-    /** Error short description */
+    /**
+     * Error short description
+     * @deprecated 1.2.0 | Use `error`. This message is dummy duplicate
+    */
     errorShortMessage?: string;
 
     /** Error */

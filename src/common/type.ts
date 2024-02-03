@@ -2,7 +2,7 @@ import { isNullOrUndefined } from "./checks";
 
 /**
  * Check is value has specified type
- * @deprecated Use manual check `value instanceof MyType`. Function not working with interfaces
+ * @deprecated 1.2.0 | Use manual check `value instanceof MyType`. Function not working with interfaces
  * @param value Up-casted value
  * @returns Value is specified Type
  */
