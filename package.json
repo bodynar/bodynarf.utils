@@ -1,6 +1,6 @@
 {
     "name": "@bodynarf/utils",
-    "version": "1.1.9",
+    "version": "1.2.0",
     "author": {
         "name": "Artem",
         "email": "bodynar@gmail.com"
@@ -24,9 +24,14 @@
     ],
     "scripts": {
         "build": "npx tsc",
-        "publish_pkg": "npx tsc && copy package.json dist && cd dist && npm publish --access=public"
+        "copy_main" : "copyfiles package.json readme.md dist",
+        "transfer": "npm run copy_main",
+        "build_transfer": "npm run build && npm run transfer",
+        "prepublish": "npm run build_transfer && cd dist && npm pack --dry-run",
+        "publish_pkg": "npm run build_transfer && cd dist && npm publish --access=public"
     },
     "devDependencies": {
+        "copyfiles": "^2.4.1",
         "typescript": "^5.0.2"
     }
 }

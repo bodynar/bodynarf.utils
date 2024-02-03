@@ -4,9 +4,9 @@ import { isNullOrEmpty, isStringEmpty } from "../common";
 const storage: Storage = window.localStorage;
 
 /**
- * Get flag of existance record in storage
+ * Get flag of existence record in storage
  * @param key Unique record key
- * @returns Flag representing existance of record
+ * @returns Flag representing existence of record
  */
 const hasRecord = (key: string): boolean => {
     if (isStringEmpty(key)) {

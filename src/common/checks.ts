@@ -29,7 +29,7 @@ export const isUndefined = <T>(value: T): boolean => {
  * Get value if it defined, otherwise - get default value
  * @param value Probably not defined value
  * @param defaultValue Default value which should be returned in default case
- * @returns Definatly defined value
+ * @returns Definitely defined value
  */
 export const getValueOrDefault = <TValue>(value: TValue | undefined, defaultValue: TValue): TValue => {
     return isNullOrUndefined(value) ? defaultValue : value!;

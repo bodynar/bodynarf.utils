@@ -1,7 +1,7 @@
 import { isNullOrUndefined, isStringEmpty } from "../common";
 
 /**
- * Build classname react element value from different values
+ * Build react element classname value from different values
  * @param partialNames Array of possible class names
  * @returns Classname attribute value
  */
