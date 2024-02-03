@@ -2,26 +2,6 @@ import { isNullOrUndefined } from "../common";
 import { generateGuid } from "../guid";
 
 /**
- * Filter array by key values
- * @deprecated Use `Array.prototype.removeByKey`. Will be removed after `v1.2`
- * @param array Array
- * @param selector Key selector
- * @param keys Keys to remove
- * @returns Filtered array
- */
-export function removeByKey<TItem, TValue>(
-    array: Array<TItem>,
-    selector: (item: TItem) => TValue,
-    keys: Array<TValue>
-): Array<TItem> {
-    return array.filter(item => {
-        const value = selector(item);
-
-        return !keys.includes(value);
-    });
-}
-
-/**
  * Grouped items by specified key
  */
 export interface Group<TModel> {
