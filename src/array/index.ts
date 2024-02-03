@@ -1,4 +1,5 @@
 import { isNullOrUndefined } from "../common";
+import { generateGuid } from "../guid";
 
 /**
  * Filter array by key values
@@ -67,6 +68,30 @@ declare global {
          * @param keySelector Key value selector
          */
         trimNotDefinedValuesBy<TKey>(keySelector: (item: T) => TKey): Array<T>;
+
+        /**
+         * Remove duplicates from current array
+         */
+        removeDuplicate(): void;
+
+        /**
+         * Remove duplicates from current array by specific key selector
+         * @param keySelector Key value selector
+         */
+        removeDuplicateBy<TKey>(keySelector: (item: T) => TKey): void;
+
+        /**
+         * Produce new array from current without duplicate values
+         * @returns Current array without duplicate values
+         */
+        withoutDuplicate(): Array<T>;
+
+        /**
+         * Produce new array from current without duplicate values by specific key selector
+         * @param keySelector Key value selector
+         * @returns Current array without duplicate values
+         */
+        withoutDuplicateBy<TKey>(keySelector: (item: T) => TKey): Array<T>;
     }
 }
 
@@ -103,7 +128,7 @@ if (isNullOrUndefined(Array.prototype.groupBy)) {
 
         const reduced = this.reduce((result, item) => {
             const value: any = item[key];
-            (result[value] = result[value] || []).push(item);
+            (result[value] = result[value] ?? []).push(item);
 
             return result;
         }, {} as Record<string, Array<TItem>>);
@@ -154,3 +179,80 @@ if (isNullOrUndefined(Array.prototype.trimNotDefinedValuesBy)) {
         return this.filter((_, i) => !excludeIndexes.includes(i));
     };
 }
+
+if (isNullOrUndefined(Array.prototype.removeDuplicate)) {
+    Array.prototype.removeDuplicate = function (): void {
+        removeDuplicateByFn(this);
+    };
+}
+
+if (isNullOrUndefined(Array.prototype.removeDuplicateBy)) {
+    Array.prototype.removeDuplicateBy = function <TItem, TKey>(keySelector: (item: TItem) => TKey): void {
+        removeDuplicateByFn(this, keySelector);
+    };
+}
+
+if (isNullOrUndefined(Array.prototype.withoutDuplicate)) {
+    Array.prototype.withoutDuplicate = function <TItem>(): Array<TItem> {
+        if (this.length === 0) {
+            return [];
+        }
+
+        return this.filter((x, i, a) => a.indexOf(x) === i);
+    };
+}
+
+if (isNullOrUndefined(Array.prototype.withoutDuplicateBy)) {
+    Array.prototype.withoutDuplicateBy = function <TItem, TKey>(keySelector: (item: TItem) => TKey): Array<TItem> {
+        if (this.length === 0) {
+            return [];
+        }
+
+        const result: Array<TItem> = [];
+        const seenKeys: Array<TKey> = [];
+
+        for (let index = 0; index < this.length; index++) {
+            const element = this[index];
+            const key = keySelector(element);
+
+            if (!seenKeys.includes(key)) {
+                seenKeys.push(key);
+                result.push(element);
+            }
+        }
+
+        return result;
+    };
+}
+
+// #region Not public fns
+
+/**
+ * Remove duplicate values from array. Modifies the array
+ * @param array Array with possible duplicates
+ * @param keySelector Selector of key values
+ * @returns 
+ */
+const removeDuplicateByFn = function <TItem extends any, TKey>(array: Array<TItem>, keySelector?: (item: TItem) => TKey): void {
+    if (array.length === 0) {
+        return;
+    }
+
+    const seenKeys: Array<any> = [];
+    const removeMarker: string = generateGuid();
+
+    for (let index = 0; index < array.length; index++) {
+        const element = array[index];
+        const key = isNullOrUndefined(keySelector) ? element : keySelector!(element);
+
+        if (!seenKeys.includes(key)) {
+            seenKeys.push(key);
+        } else {
+            array[index] = removeMarker as TItem;
+        }
+    }
+
+    array.removeByFn(x => x === removeMarker);
+};
+
+// #endregion
