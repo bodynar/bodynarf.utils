@@ -72,6 +72,12 @@ declare global {
          * @returns Current array without duplicate values
          */
         withoutDuplicateBy<TKey>(keySelector: (item: T) => TKey): Array<T>;
+
+        /**
+         * Split array to chunks
+         * @param chunkSize Size of single chunk
+         */
+        chunk<TItem>(chunkSize: number): Array<Array<TItem>>;
     }
 }
 
@@ -202,6 +208,19 @@ if (isNullOrUndefined(Array.prototype.withoutDuplicateBy)) {
         }
 
         return result;
+    };
+}
+
+if (isNullOrUndefined(Array.prototype.chunk)) {
+    Array.prototype.chunk = function <TItem>(chunkSize: number): Array<Array<TItem>> {
+        return this.reduce((result, item, index) => {
+            if (index % chunkSize === 0) {
+                result.push([item]);
+            } else {
+                result[result.length - 1].push(item);
+            }
+            return result;
+        }, []);
     };
 }
 
