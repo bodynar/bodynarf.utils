@@ -21,12 +21,18 @@ export const isNullOrEmpty = (value?: string | null): boolean => {
 declare global {
     interface String {
         /**
-         * @public
          * Formate string by replacing anchors {0} with function arguments
-         * @example `"{0} world!".format("Hello")` // "Hello world!"
+         * @example `"{0} world!".format("Hello")` // => "Hello world!"
          * @returns {string} Formatted string
          */
         format(...args: Array<string>): string;
+
+        /**
+         * Convert first letter to uppercase
+         * @example `"hello world!".capitalize()` // => "Hello world!"
+         * @returns {string} String
+         */
+        capitalize(): string;
     }
 }
 
@@ -39,5 +45,11 @@ if (isNullOrUndefined(String.prototype.format)) {
         });
 
         return result;
+    };
+}
+
+if (isNullOrUndefined(String.prototype.capitalize)) {
+    String.prototype.capitalize = function () {
+        return this.charAt(0).toUpperCase() + this.slice(1);
     };
 }
