@@ -69,9 +69,10 @@ declare global {
         /**
          * Produce new array from current without duplicate values by specific key selector
          * @param keySelector Key value selector
+         * @param ignoreEmptyValues Ignore values null & undefined values
          * @returns Current array without duplicate values
          */
-        withoutDuplicateBy<TKey>(keySelector: (item: T) => TKey): Array<T>;
+        withoutDuplicateBy<TKey>(keySelector: (item: T) => TKey, ignoreEmptyValues: boolean): Array<T>;
     }
 }
 
@@ -183,7 +184,10 @@ if (isNullOrUndefined(Array.prototype.withoutDuplicate)) {
 }
 
 if (isNullOrUndefined(Array.prototype.withoutDuplicateBy)) {
-    Array.prototype.withoutDuplicateBy = function <TItem, TKey>(keySelector: (item: TItem) => TKey): Array<TItem> {
+    Array.prototype.withoutDuplicateBy = function <TItem, TKey>(
+        keySelector: (item: TItem) => TKey,
+        ignoreEmptyValues = false
+    ): Array<TItem> {
         if (this.length === 0) {
             return [];
         }
@@ -194,6 +198,12 @@ if (isNullOrUndefined(Array.prototype.withoutDuplicateBy)) {
         for (let index = 0; index < this.length; index++) {
             const element = this[index];
             const key = keySelector(element);
+
+            const isEmptyValue = isNullOrUndefined(key);
+
+            if (ignoreEmptyValues && isEmptyValue) {
+                result.push(element);
+            }
 
             if (!seenKeys.includes(key)) {
                 seenKeys.push(key);
