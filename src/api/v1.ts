@@ -73,6 +73,8 @@ export const safeFetch = async (
     requestParams: RequestInit,
     params?: RequestParams
 ): Promise<string> => {
+    console.warn("[DEPRECATED] 1.2.0 | 1.2.0 | Use `safeFetch` from `v2`");
+
     try {
         const response: Response = await fetchApi(uri, requestParams);
 
@@ -138,6 +140,7 @@ export const fetchApi = async (
  * @returns Error message to display
  */
 export const getErrorText = (response: Response, suppressStateCheck: boolean = false): string => {
+    console.warn("[DEPRECATED] 1.2.0 | Do not use this useless fn");
     if (response.ok && !suppressStateCheck) {
         throw new Error("Response is ok, but error handler called.");
     }
