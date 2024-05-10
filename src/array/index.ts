@@ -1,4 +1,4 @@
-import { isNullOrUndefined } from "../common";
+import { isNullOrEmpty, isNullOrUndefined } from "../common";
 import { generateGuid } from "../guid";
 
 /**
@@ -15,27 +15,6 @@ export interface Group<TModel> {
 declare global {
     interface Array<T> {
         /**
-         * Remove specified item from array.
-         * With array mutation
-         * @param item Item in array
-         */
-        remove<T>(item: T): void;
-
-        /**
-         * Remove items from array by specified predicate function.
-         * With array mutation
-         * @param predicate Function to select items
-         */
-        removeByFn<T>(predicate: (item: T) => boolean): void;
-
-        /**
-         * Remove items which keys not presented in allowed keys array
-         * @param keys Allowed keys array
-         * @param key Name of object `T` property
-         */
-        removeByKey<T>(keys: Array<T[keyof T]>, key: keyof T): void;
-
-        /**
          * Group items by specified key
          * @param items Array of items
          * @param key Model key value that should divide items array into groups by this value
@@ -50,15 +29,62 @@ declare global {
         trimNotDefinedValuesBy<TKey>(keySelector: (item: T) => TKey): Array<T>;
 
         /**
+         * Split array to chunks
+         * @param chunkSize Size of single chunk
+         */
+        chunk<TItem>(chunkSize: number): Array<Array<TItem>>;
+
+        // #region remove (with mutation)
+
+        /**
+         * Remove specified item from array
+         * @description Mutates the array
+         * @param item Item in array
+         */
+        remove<T>(item: T): void;
+
+        /**
+         * Remove items from array by specified predicate function.
+         * @description Mutates the array
+         * @param predicate Function to select items
+         */
+        removeByFn<T>(predicate: (item: T) => boolean): void;
+
+        /**
+         * Remove items which keys not presented in allowed keys array
+         * @description Mutates the array
+         * @param keys Allowed keys array
+         * @param key Name of object `T` property
+         */
+        removeByKey<T>(keys: Array<T[keyof T]>, key: keyof T): void;
+
+        /**
          * Remove duplicates from current array
+         * @description Mutates the array
          */
         removeDuplicate(): void;
 
         /**
          * Remove duplicates from current array by specific key selector
+         * @description Mutates the array
          * @param keySelector Key value selector
          */
         removeDuplicateBy<TKey>(keySelector: (item: T) => TKey): void;
+
+        // #endregion
+
+        // #region without (no mutation)
+
+        /**
+         * Remove empty values (`[null, undefined]` & `[""]` depending on `removeEmptyString` flag)
+         * @example [1, undefined, 2, 3, "some", "", null, "undefined", "text"].removeEmpty(true); // => [1, 2, 3, "some", "undefined", "text"]
+         * @param removeEmptyString Remove empty strings (default is `false`)
+         * @param valueSelector Selector for value for complex objects
+         */
+        withoutEmpty<TKey>(
+            removeEmptyString?: boolean,
+            valueSelector?: (item: T) => TKey | T,
+        ): Array<T>;
 
         /**
          * Produce new array from current without duplicate values
@@ -74,37 +100,8 @@ declare global {
          */
         withoutDuplicateBy<TKey>(keySelector: (item: T) => TKey, ignoreEmptyValues?: boolean): Array<T>;
 
-        /**
-         * Split array to chunks
-         * @param chunkSize Size of single chunk
-         */
-        chunk<TItem>(chunkSize: number): Array<Array<TItem>>;   
+        // #endregion
     }
-}
-
-if (isNullOrUndefined(Array.prototype.remove)) {
-    Array.prototype.remove = function <TItem>(item: TItem): void {
-        const index = this.indexOf(item);
-
-        if (index >= 0) {
-            this.splice(index, 1);
-        }
-    };
-}
-
-if (isNullOrUndefined(Array.prototype.removeByFn)) {
-    Array.prototype.removeByFn = function <TItem>(predicate: (item: TItem) => boolean): void {
-        while (true) {
-            const index = this.findIndex(predicate);
-
-            if (index >= 0) {
-                this.splice(index, 1);
-                continue;
-            }
-
-            break;
-        }
-    };
 }
 
 if (isNullOrUndefined(Array.prototype.groupBy)) {
@@ -124,13 +121,6 @@ if (isNullOrUndefined(Array.prototype.groupBy)) {
             key,
             items: value
         }) as Group<TItem>);
-    };
-}
-
-if (isNullOrUndefined(Array.prototype.removeByKey)) {
-    Array.prototype.removeByKey = function <TItem>(keys: Array<TItem[keyof TItem]>, key: keyof TItem): void {
-        this.filter(item => !keys.includes(item[key]))
-            .forEach(item => this.remove(item));
     };
 }
 
@@ -167,6 +157,53 @@ if (isNullOrUndefined(Array.prototype.trimNotDefinedValuesBy)) {
     };
 }
 
+if (isNullOrUndefined(Array.prototype.chunk)) {
+    Array.prototype.chunk = function <TItem>(chunkSize: number): Array<Array<TItem>> {
+        return this.reduce((result, item, index) => {
+            if (index % chunkSize === 0) {
+                result.push([item]);
+            } else {
+                result[result.length - 1].push(item);
+            }
+            return result;
+        }, []);
+    };
+}
+
+// #region remove (with mutation)
+
+if (isNullOrUndefined(Array.prototype.remove)) {
+    Array.prototype.remove = function <TItem>(item: TItem): void {
+        const index = this.indexOf(item);
+
+        if (index >= 0) {
+            this.splice(index, 1);
+        }
+    };
+}
+
+if (isNullOrUndefined(Array.prototype.removeByFn)) {
+    Array.prototype.removeByFn = function <TItem>(predicate: (item: TItem) => boolean): void {
+        while (true) {
+            const index = this.findIndex(predicate);
+
+            if (index >= 0) {
+                this.splice(index, 1);
+                continue;
+            }
+
+            break;
+        }
+    };
+}
+
+if (isNullOrUndefined(Array.prototype.removeByKey)) {
+    Array.prototype.removeByKey = function <TItem>(keys: Array<TItem[keyof TItem]>, key: keyof TItem): void {
+        this.filter(item => !keys.includes(item[key]))
+            .forEach(item => this.remove(item));
+    };
+}
+
 if (isNullOrUndefined(Array.prototype.removeDuplicate)) {
     Array.prototype.removeDuplicate = function (): void {
         removeDuplicateByFn(this);
@@ -178,6 +215,10 @@ if (isNullOrUndefined(Array.prototype.removeDuplicateBy)) {
         removeDuplicateByFn(this, keySelector);
     };
 }
+
+// #endregion
+
+// #region without (no mutation)
 
 if (isNullOrUndefined(Array.prototype.withoutDuplicate)) {
     Array.prototype.withoutDuplicate = function <TItem>(): Array<TItem> {
@@ -222,18 +263,25 @@ if (isNullOrUndefined(Array.prototype.withoutDuplicateBy)) {
     };
 }
 
-if (isNullOrUndefined(Array.prototype.chunk)) {
-    Array.prototype.chunk = function <TItem>(chunkSize: number): Array<Array<TItem>> {
-        return this.reduce((result, item, index) => {
-            if (index % chunkSize === 0) {
-                result.push([item]);
-            } else {
-                result[result.length - 1].push(item);
-            }
-            return result;
-        }, []);
+if (isNullOrUndefined(Array.prototype.withoutEmpty)) {
+    Array.prototype.withoutEmpty = function <TItem, TKey = object | TItem>(
+        removeEmptyString = false,
+        valueSelector: (item: TItem) => TKey | TItem = (x) => x,
+    ): Array<TItem> {
+        return this.filter(item => {
+            const value = valueSelector(item);
+
+            const isEmptyValue = removeEmptyString
+                ? isNullOrEmpty(value as string)
+                : isNullOrUndefined(value)
+                ;
+
+            return !isEmptyValue;
+        });
     };
 }
+
+// #endregion
 
 // #region Not public fns
 
