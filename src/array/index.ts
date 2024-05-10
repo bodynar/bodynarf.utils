@@ -72,7 +72,7 @@ declare global {
          * @param ignoreEmptyValues Ignore values null & undefined values
          * @returns Current array without duplicate values
          */
-        withoutDuplicateBy<TKey>(keySelector: (item: T) => TKey, ignoreEmptyValues: boolean): Array<T>;
+        withoutDuplicateBy<TKey>(keySelector: (item: T) => TKey, ignoreEmptyValues?: boolean): Array<T>;
     }
 }
 
@@ -203,6 +203,7 @@ if (isNullOrUndefined(Array.prototype.withoutDuplicateBy)) {
 
             if (ignoreEmptyValues && isEmptyValue) {
                 result.push(element);
+                continue;
             }
 
             if (!seenKeys.includes(key)) {
