@@ -15,7 +15,7 @@ export const safeFetch = async <TResult>(
     params?: RequestParams
 ): Promise<ApiResult<TResult>> => {
     try {
-        const response: Response = await fetchApi(uri, requestParams);
+        const response: Response = await fetchApi(uri, requestParams, params);
 
         const textResponse: string = await response.text();
 

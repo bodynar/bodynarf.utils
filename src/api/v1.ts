@@ -76,7 +76,7 @@ export const safeFetch = async (
     console.warn("[DEPRECATED] 1.2.0 | 1.2.0 | Use `safeFetch` from `v2`");
 
     try {
-        const response: Response = await fetchApi(uri, requestParams);
+        const response: Response = await fetchApi(uri, requestParams, params);
 
         if (response.ok) {
             const textResponse: string = await response.text();
