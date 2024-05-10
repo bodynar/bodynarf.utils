@@ -52,9 +52,17 @@ const saveRecord = <TValue>(key: string, value: TValue): void => {
     storage.setItem(key, record);
 };
 
+/**
+ * Clear storage, remove all existing values
+ */
+const clear = (): void => {
+    storage.clear();
+}
+
 /** API to access local storage data */
 export const localStorage = {
     hasRecord,
     getRecord,
-    saveRecord
+    saveRecord,
+    clear,
 };
