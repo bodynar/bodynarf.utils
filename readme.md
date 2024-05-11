@@ -6,6 +6,7 @@ Contained elements:
  - **api** - perform http requests *(get\post)*;
    - *v1* - result of execution: plain data
    - *v2* - result of execution: complex object representing response state
+   - *simple* - new final way of performing http requests
  - **array** - functions to work with arrays
  - **common** - value checks & string utils;
  - **component** - handy functions to use in react components;
