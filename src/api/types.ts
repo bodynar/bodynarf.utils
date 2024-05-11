@@ -3,6 +3,19 @@ export type RequestData = {
     [propertyName: string]: any;
 } | string;
 
+export type RequestConfiguration = {
+    /**
+     * Timeout in milliseconds.
+     * If specified - request will be aborted after this time.
+    */
+    timeout?: number;
+
+    /**
+     * Headers
+     */
+    headers?: HeadersInit;
+};
+
 /** Additional request parameters */
 export interface RequestParams {
     /**
@@ -10,6 +23,11 @@ export interface RequestParams {
      * If specified - request will be aborted after this time.
     */
     timeout?: number;
+
+    /**
+     * Headers
+     */
+    headers?: HeadersInit;
 };
 
 /** Result of fetching remote API */
