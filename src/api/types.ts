@@ -1,8 +1,12 @@
-/** Request body data */
+/**
+ * Request body data
+ * @deprecated 1.3.0 | Use "./simple" for fetching data
+ */
 export type RequestData = {
     [propertyName: string]: any;
 } | string;
 
+/** Additional fetch request configuration */
 export type RequestConfiguration = {
     /**
      * Timeout in milliseconds.
@@ -16,7 +20,10 @@ export type RequestConfiguration = {
     headers?: HeadersInit;
 };
 
-/** Additional request parameters */
+/**
+ * Additional request parameters
+ * @deprecated 1.3.0 | Use "./simple" for fetching data
+ */
 export interface RequestParams {
     /**
      * Timeout in milliseconds.
@@ -30,7 +37,10 @@ export interface RequestParams {
     headers?: HeadersInit;
 };
 
-/** Result of fetching remote API */
+/**
+ * Result of fetching remote API
+ * @deprecated 1.3.0 | Use "./simple" for fetching data
+ */
 export interface ApiResult<TResult> {
     /** Is request succeeded */
     success: boolean;

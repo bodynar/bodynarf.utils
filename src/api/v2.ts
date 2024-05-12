@@ -4,7 +4,7 @@ import { ApiResult, RequestParams, fetchApi, getErrorText } from ".";
 
 /**
  * Send configured http request to specified api with error handling
- * @deprecated 1.3.0 | Use request from "../simple"
+ * @deprecated 1.3.0 | Use "./simple" for fetching data
  * @param uri Uri address to fetch
  * @param requestParams Request parameters
  * @param params Additional request configuration

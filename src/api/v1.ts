@@ -13,7 +13,7 @@ export const statusCodesErrorsMap = new Map<number, string>([
 
 /**
  * Send data to api to process
- * @deprecated 1.3.0 | Use request from "../simple"
+ * @deprecated 1.3.0 | Use "./simple" for fetching data
  * @param uri Api endpoint address
  * @param requestData Request data
  * @param params Additional request configuration
@@ -42,7 +42,7 @@ export const post = async <TResult extends object>(
 
 /**
  * Gather data from specified api
- * @deprecated 1.3.0 | Use request from "../simple"
+ * @deprecated 1.3.0 | Use "./simple" for fetching data
  * @param uri Api endpoint address
  * @param params Additional request configuration
  * @returns {Promise<TResult>} Promise with api get result
@@ -100,7 +100,7 @@ export const safeFetch = async (
 
 /**
  * Fetch data by specified configuration
- * @deprecated 1.3.0 | Use request from "../simple"
+ * @deprecated 1.3.0 | Use "./simple" for fetching data
  * @param uri Uri address to fetch
  * @param requestParams Request parameters
  * @param params Additional request configuration
