@@ -4,6 +4,7 @@ import { ApiResult, RequestParams, fetchApi, getErrorText } from ".";
 
 /**
  * Send configured http request to specified api with error handling
+ * @deprecated 1.3.0 | Use "./simple" for fetching data
  * @param uri Uri address to fetch
  * @param requestParams Request parameters
  * @param params Additional request configuration
@@ -15,7 +16,7 @@ export const safeFetch = async <TResult>(
     params?: RequestParams
 ): Promise<ApiResult<TResult>> => {
     try {
-        const response: Response = await fetchApi(uri, requestParams);
+        const response: Response = await fetchApi(uri, requestParams, params);
 
         const textResponse: string = await response.text();
 

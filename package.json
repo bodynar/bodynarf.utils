@@ -1,6 +1,6 @@
 {
     "name": "@bodynarf/utils",
-    "version": "1.2.1-patch",
+    "version": "1.3.0",
     "author": {
         "name": "Artem",
         "email": "bodynar@gmail.com"
@@ -27,7 +27,7 @@
         "copy_main" : "copyfiles package.json readme.md dist",
         "transfer": "npm run copy_main",
         "build_transfer": "npm run build && npm run transfer",
-        "prepublish": "npm run build_transfer && cd dist && npm pack --dry-run",
+        "prepublish": "npm run build_transfer && cd dist && npm pack",
         "publish_pkg": "npm run build_transfer && cd dist && npm publish --access=public"
     },
     "devDependencies": {

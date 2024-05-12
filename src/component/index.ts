@@ -1,5 +1,3 @@
-import { isNullOrUndefined, isStringEmpty } from "../common";
-
 /**
  * Build react element classname value from different values
  * @param partialNames Array of possible class names
@@ -7,9 +5,8 @@ import { isNullOrUndefined, isStringEmpty } from "../common";
  */
 export const getClassName = (partialNames: Array<string | undefined>): string => {
     return partialNames
-        .filter(x => !isNullOrUndefined(x))
-        .filter(x => !isStringEmpty(x!))
-        .filter((x, i, array) => array.indexOf(x) === i)
+        .withoutEmpty(true)
+        .withoutDuplicate()
         .join(" ")
         ;
 };

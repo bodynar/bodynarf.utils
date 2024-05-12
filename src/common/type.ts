@@ -7,6 +7,7 @@ import { isNullOrUndefined } from "./checks";
  * @returns Value is specified Type
  */
 export const isType = <T>(value: any): value is T => {
+    console.warn("[DEPRECATED] 1.2.0 | Use manual check `value instanceof MyType`. Function not working with interfaces");
     const mapped = value as T;
 
     return !isNullOrUndefined(mapped);
