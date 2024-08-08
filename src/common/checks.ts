@@ -1,3 +1,5 @@
+import { Nullish } from "..";
+
 /**
  * Check is value defined
  * @param value Value to check
@@ -5,6 +7,14 @@
  */
 export const isNullOrUndefined = <T>(value: T): boolean => {
     return isNull(value) || isUndefined(value);
+};
+
+/**
+ * Type guard against nullish values
+ * @param value Value to check
+ */
+export const isNullish = (value: unknown): value is Nullish => {
+    return value === null || value === undefined;
 };
 
 /**
