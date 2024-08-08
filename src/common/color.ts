@@ -1,5 +1,4 @@
-import { isNullOrUndefined } from "./checks";
-import { isNullOrEmpty } from "./string";
+import { Optional, isNullOrUndefined,  isNullOrEmpty } from "..";
 
 /** Color RGB model*/
 export interface Color {
@@ -56,7 +55,7 @@ export function isHexColor(colorString: string): boolean {
  * @param colorString String with rgb color presented as rgb()
  * @returns Rgb color model if parse is succeeded; otherwise - `undefined`
  */
-export function getRgbColor(colorString: string): Color | undefined {
+export function getRgbColor(colorString: string): Optional<Color> {
     if (isNullOrEmpty(colorString) || !isRgbColor(colorString)) {
         return undefined;
     }
@@ -76,7 +75,7 @@ export function getRgbColor(colorString: string): Color | undefined {
  * @param hexColor String with hex color presented as #{hex}
  * @returns Rgb color model if parse is succeeded; otherwise - `undefined`
  */
-export function hexToRgb(hexColor: string): Color | undefined {
+export function hexToRgb(hexColor: string): Optional<Color> {
     if (isNullOrEmpty(hexColor) || !isHexColor(hexColor)) {
         return undefined;
     }
@@ -128,7 +127,7 @@ export function rgbToHex({ red, green, blue }: Color): string {
  * @returns String with hex color: black or white if input string contains color; otherwise - empty string
  */
 export function getFontColorFromString(colorString: string): string {
-    const rgbColor: Color | undefined =
+    const rgbColor: Optional<Color> =
         isRgbColor(colorString)
             ? getRgbColor(colorString)
             : hexToRgb(colorString);

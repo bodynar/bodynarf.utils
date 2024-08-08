@@ -1,4 +1,4 @@
-import { isNullOrEmpty, isStringEmpty } from "../common";
+import { Optional, isNullOrEmpty, isStringEmpty } from "..";
 
 /** shortcut to local storage */
 const storage: Storage = window.localStorage;
@@ -23,7 +23,7 @@ const hasRecord = (key: string): boolean => {
  * @param key Unique record key
  * @returns Undefined if record does not exist in storage; otherwise saved value
  */
-const getRecord = <TValue>(key: string): TValue | undefined => {
+const getRecord = <TValue>(key: string): Optional<TValue> => {
     if (isStringEmpty(key)) {
         return undefined;
     }

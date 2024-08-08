@@ -1,4 +1,4 @@
-import { isNullOrUndefined } from "../common";
+import { isNullOrUndefined, Optional } from "..";
 
 import { RequestConfiguration } from ".";
 
@@ -118,7 +118,7 @@ const internalFetchAsync = async (
     requestParams: RequestInit,
     config?: RequestConfiguration
 ): Promise<Response> => {
-    let timeoutRequestCallNumber: number | undefined = undefined;
+    let timeoutRequestCallNumber: Optional<number> = undefined;
 
     const timeout = config?.timeout ?? 0;
 

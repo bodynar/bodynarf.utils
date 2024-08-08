@@ -1,4 +1,4 @@
-import { Nullish } from "..";
+import { Nullish, Optional } from "..";
 
 /**
  * Check is value defined
@@ -41,7 +41,7 @@ export const isUndefined = <T>(value: T): boolean => {
  * @param defaultValue Default value which should be returned in default case
  * @returns Definitely defined value
  */
-export const getValueOrDefault = <TValue>(value: TValue | undefined, defaultValue: TValue): TValue => {
+export const getValueOrDefault = <TValue>(value: Optional<TValue>, defaultValue: TValue): TValue => {
     return isNullOrUndefined(value) ? defaultValue : value!;
 };
 
