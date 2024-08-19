@@ -42,7 +42,7 @@ export const isUndefined = <T>(value: T): boolean => {
  * @returns Definitely defined value
  */
 export const getValueOrDefault = <TValue>(value: Optional<TValue>, defaultValue: TValue): TValue => {
-    return isNullOrUndefined(value) ? defaultValue : value!;
+    return isNullish(value) ? defaultValue : value;
 };
 
 /**

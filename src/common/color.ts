@@ -1,4 +1,4 @@
-import { Optional, isNullOrUndefined,  isNullOrEmpty } from "..";
+import { Optional, isNullOrEmpty, isNullish } from "..";
 
 /** Color RGB model*/
 export interface Color {
@@ -132,11 +132,11 @@ export function getFontColorFromString(colorString: string): string {
             ? getRgbColor(colorString)
             : hexToRgb(colorString);
 
-    if (isNullOrUndefined(rgbColor)) {
+    if (isNullish(rgbColor)) {
         return "";
     }
 
-    return getFontColor(rgbColor!);
+    return getFontColor(rgbColor);
 }
 
 /**

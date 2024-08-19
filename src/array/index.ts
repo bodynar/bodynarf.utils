@@ -1,4 +1,4 @@
-import { isNullOrEmpty, isNullOrUndefined } from "../common";
+import { isNullish, isNullOrEmpty, isNullOrUndefined } from "../common";
 import { generateGuid } from "../guid";
 
 /**
@@ -301,7 +301,7 @@ const removeDuplicateByFn = function <TItem extends any, TKey>(array: Array<TIte
 
     for (let index = 0; index < array.length; index++) {
         const element = array[index];
-        const key = isNullOrUndefined(keySelector) ? element : keySelector!(element);
+        const key = isNullish(keySelector) ? element : keySelector(element);
 
         if (!seenKeys.includes(key)) {
             seenKeys.push(key);
