@@ -7,7 +7,7 @@ export type Nullish = null | undefined;
  * @template TWeak Type with keys, which can be overwritten in case of duplicate
  * @template TStrong Type with keys, which will overwrite keys from TWeak type in case of duplicate
  */
-export type Merge<TWeak, TStrong> = TStrong & Omit<TWeak, keyof TStrong>;
+export type Merge<TStrong, TWeak> = TStrong & Omit<TWeak, keyof TStrong>;
 
 /**
  * Concrete type or `undefined`
