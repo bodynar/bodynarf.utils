@@ -16,6 +16,7 @@ export const safeFetch = async <TResult>(
     params?: RequestParams
 ): Promise<ApiResult<TResult>> => {
     try {
+        console.warn("[DEPRECATED] 1.3.0 | Use \"./simple\" for fetching data");
         const response: Response = await fetchApi(uri, requestParams, params);
 
         const textResponse: string = await response.text();
