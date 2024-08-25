@@ -1,3 +1,5 @@
+import { Nullish, Optional } from "..";
+
 /**
  * Check is value defined
  * @param value Value to check
@@ -5,6 +7,14 @@
  */
 export const isNullOrUndefined = <T>(value: T): boolean => {
     return isNull(value) || isUndefined(value);
+};
+
+/**
+ * Type guard against nullish values
+ * @param value Value to check
+ */
+export const isNullish = (value: unknown): value is Nullish => {
+    return value === null || value === undefined;
 };
 
 /**
@@ -31,8 +41,8 @@ export const isUndefined = <T>(value: T): boolean => {
  * @param defaultValue Default value which should be returned in default case
  * @returns Definitely defined value
  */
-export const getValueOrDefault = <TValue>(value: TValue | undefined, defaultValue: TValue): TValue => {
-    return isNullOrUndefined(value) ? defaultValue : value!;
+export const getValueOrDefault = <TValue>(value: Optional<TValue>, defaultValue: TValue): TValue => {
+    return isNullish(value) ? defaultValue : value;
 };
 
 /**

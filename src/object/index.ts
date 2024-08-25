@@ -1,4 +1,4 @@
-import { isStringEmpty, isNullOrUndefined } from "../common";
+import { Optional, isStringEmpty, isNullOrUndefined } from "..";
 
 /**
  * Check is key declared in object. Throws errors if not
@@ -29,7 +29,7 @@ export const ensurePropertyDefined = <T extends object>(object: T, propertyName:
  * @param propertyName Name of property
  * @returns Value stored by specified property in object if it is defined, otherwise - `undefined`
  */
-export const getPropertyValue = <TResult>(object: Record<string, any>, propertyName: string): TResult | undefined => {
+export const getPropertyValue = <TResult>(object: Record<string, any>, propertyName: string): Optional<TResult> => {
     if (isNullOrUndefined(object)) {
         throw new Error("Parameter \"object\" is not defined.");
     }

@@ -24,6 +24,7 @@ export const post = async <TResult extends object>(
     requestData: RequestData,
     params?: RequestParams
 ): Promise<TResult | undefined> => {
+    console.error("[DEPRECATED] 1.2.0 | Use \"./simple\" for fetching data");
     const requestParams: RequestInit = {
         method: "POST",
         headers: {
@@ -51,6 +52,7 @@ export const get = async <TResult>(
     uri: string,
     params?: RequestParams
 ): Promise<TResult> => {
+    console.error("[DEPRECATED] 1.2.0 | Use \"./simple\" for fetching data");
     const requestParams: RequestInit = {
         method: "GET",
         headers: {
@@ -64,7 +66,7 @@ export const get = async <TResult>(
 
 /**
  * Send configured http request to specified api with error handling
- * @deprecated 1.2.0 | Use `safeFetch` from `v2`
+ * @deprecated 1.2.0 | Use "./simple" for fetching data
  * @param uri Uri address to fetch
  * @param requestParams Request parameters
  * @param params Additional request configuration
@@ -75,7 +77,7 @@ export const safeFetch = async (
     requestParams: RequestInit,
     params?: RequestParams
 ): Promise<string> => {
-    console.warn("[DEPRECATED] 1.2.0 | 1.2.0 | Use `safeFetch` from `v2`");
+    console.error("[DEPRECATED] 1.2.0 | Use \"./simple\" for fetching data");
 
     try {
         const response: Response = await fetchApi(uri, requestParams, params);
@@ -111,6 +113,7 @@ export const fetchApi = async (
     requestParams: RequestInit,
     params?: RequestParams
 ): Promise<Response> => {
+    console.error("[DEPRECATED] 1.2.0 | Use \"./simple\" for fetching data");
     let timeoutRequestCallNumber: number | undefined = undefined;
 
     if (!isNullOrUndefined(params)
@@ -143,7 +146,7 @@ export const fetchApi = async (
  * @returns Error message to display
  */
 export const getErrorText = (response: Response, suppressStateCheck: boolean = false): string => {
-    console.warn("[DEPRECATED] 1.2.0 | Do not use this useless fn");
+    console.error("[DEPRECATED] 1.2.0 | Do not use this useless fn");
     if (response.ok && !suppressStateCheck) {
         throw new Error("Response is ok, but error handler called.");
     }

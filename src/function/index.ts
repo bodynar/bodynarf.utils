@@ -1,3 +1,5 @@
+import { isNullOrUndefined } from "../common";
+
 /**
  * Delay resolve of promise in specified amount of milliseconds
  * @param time Delay time in milliseconds
@@ -32,3 +34,30 @@ export const withDelay = (time: number, action: Function): number => {
  * Empty function
  */
 export const emptyFn = () => { };
+
+/**
+ * Wrap function execution to prevent calls in specified delay
+ * @description Delays function execution with specified amount of time (ms) to prevent several executions.
+ * @example
+ *  const fn = () => alert("text");
+ *  const handler = debounce(fn, 500);
+ *  handler(); // started a timer with 500ms
+ *  handler(); // restarted timer with 500ms, previous call will be not executed
+ *  handler(); // restarted timer with 500ms, previous call will be not executed & fn will be executed only here
+ * @param fn Function to execute
+ * @param delay Delay before function execution
+ * @returns Wrapped function
+ */
+export const debounce = (fn: Function, delay: number): Function => {
+    let timerId: number;
+
+    return function(...args: unknown[]) {
+        if (!isNullOrUndefined(timerId)) {
+            clearTimeout(timerId);
+        }
+
+        timerId = setTimeout(() => {
+            fn(...args);
+        }, delay);
+    };
+};
