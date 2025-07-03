@@ -86,6 +86,23 @@ export const fetchAsync = async <TResult = unknown>(
 };
 
 /**
+ * Send Http request to specified endpoint
+ * @param uri Api endpoint address
+ * @param requestParams Request parameters
+ * @param config Additional request configuration
+ * @throws {HttpError} Whether the response wasn't successful (status not in the range 200-299)
+ * @throws {DOMException} When request is aborted due timeout (if timeout was specified)
+ * @returns Promise with result of a request
+ */
+export const plainFetchAsync = (
+    uri: string,
+    requestParams: RequestInit,
+    config?: RequestConfiguration
+): Promise<Response> => {
+    return internalFetchAsync(uri, requestParams, config);
+};
+
+/**
  * Send Http request to specified endpoint to retrieve text data
  * @param uri Api endpoint address
  * @param requestParams Request parameters
