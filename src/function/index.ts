@@ -1,3 +1,4 @@
+import { ActionFn } from "..";
 import { isNullOrUndefined } from "../common";
 
 /**
@@ -33,7 +34,7 @@ export const withDelay = (time: number, action: Function): number => {
 /**
  * Empty function
  */
-export const emptyFn = () => { };
+export const emptyFn: ActionFn = () => { };
 
 /**
  * Wrap function execution to prevent calls in specified delay

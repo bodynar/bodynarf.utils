@@ -14,3 +14,11 @@ export type Merge<TStrong, TWeak> = TStrong & Omit<TWeak, keyof TStrong>;
  * @template TWrapped Concrete type
  */
 export type Optional<TWrapped> = TWrapped | undefined;
+
+/**
+ * Simple function with 1 out parameter and 0 input parameters
+ */
+export type SimpleFn<TResult> = () => TResult;
+
+/** Simple function with 0 in\out parameters */
+export type ActionFn = SimpleFn<void>;
