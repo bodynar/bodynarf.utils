@@ -1,4 +1,4 @@
-import { isNullOrUndefined } from "./";
+import { isNullish, isNullOrUndefined } from "./";
 
 /**
  * Check is string is empty
@@ -15,7 +15,7 @@ export const isStringEmpty = (value: string): boolean => {
  * @returns Flag is passed value null or undefined or empty string
  */
 export const isNullOrEmpty = (value?: string | null): boolean => {
-    return isNullOrUndefined(value) || isStringEmpty(value as string);
+    return isNullish(value) || isStringEmpty(value as string);
 };
 
 declare global {
@@ -25,7 +25,7 @@ declare global {
          * @example `"{0} world!".format("Hello")` // => "Hello world!"
          * @returns {string} Formatted string
          */
-        format(...args: Array<string>): string;
+        format(...args: Array<unknown>): string;
 
         /**
          * Convert first letter to uppercase
@@ -37,11 +37,11 @@ declare global {
 }
 
 if (isNullOrUndefined(String.prototype.format)) {
-    String.prototype.format = function (...args: Array<string>) {
+    String.prototype.format = function (...args: Array<unknown>) {
         let result = this as string;
 
-        [...args].forEach((arg: any, i: number) => {
-            result = result.replace(`{${i}}`, arg);
+        [...args].forEach((arg: unknown, i: number) => {
+            result = result.replace(`{${i}}`, String(arg));
         });
 
         return result;
