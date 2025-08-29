@@ -1,5 +1,4 @@
 import { isNullish, isNullOrEmpty, isNullOrUndefined } from "../common";
-import { generateGuid } from "../guid";
 
 /**
  * Grouped items by specified key
@@ -129,8 +128,7 @@ if (isNullOrUndefined(Array.prototype.trimNotDefinedValuesBy)) {
         const excludeIndexes: Array<number> = [];
         let index = 0;
 
-        // eslint-disable-next-line no-constant-condition
-        while (true) {
+        while (index < this.length) {
             const keyValue = keySelector(this[index]);
 
             if (isNullOrUndefined(keyValue)) {
@@ -142,8 +140,7 @@ if (isNullOrUndefined(Array.prototype.trimNotDefinedValuesBy)) {
 
         index = this.length - 1;
 
-        // eslint-disable-next-line no-constant-condition
-        while (true) {
+        while (index >= 0) {
             const keyValue = keySelector(this[index]);
 
             if (isNullOrUndefined(keyValue)) {
@@ -184,23 +181,24 @@ if (isNullOrUndefined(Array.prototype.remove)) {
 
 if (isNullOrUndefined(Array.prototype.removeByFn)) {
     Array.prototype.removeByFn = function <TItem>(predicate: (item: TItem) => boolean): void {
-        while (true) {
-            const index = this.findIndex(predicate);
-
-            if (index >= 0) {
-                this.splice(index, 1);
-                continue;
-            }
-
-            break;
+        let index;
+        while ((index = this.findIndex(predicate)) >= 0) {
+            this.splice(index, 1);
         }
     };
 }
 
 if (isNullOrUndefined(Array.prototype.removeByKey)) {
     Array.prototype.removeByKey = function <TItem>(keys: Array<TItem[keyof TItem]>, key: keyof TItem): void {
-        this.filter(item => !keys.includes(item[key]))
-            .forEach(item => this.remove(item));
+        // Создаем Set для быстрого поиска ключей
+        const keysSet = new Set(keys);
+
+        // Проходим по массиву с конца к началу, чтобы индексы не сбивались при удалении
+        for (let i = this.length - 1; i >= 0; i--) {
+            if (keysSet.has(this[i][key])) {
+                this.splice(i, 1);
+            }
+        }
     };
 }
 
@@ -246,7 +244,7 @@ if (isNullOrUndefined(Array.prototype.withoutDuplicateBy)) {
         }
 
         const result: Array<TItem> = [];
-        const seenKeys: Array<TKey> = [];
+        const seenKeys = new Set<TKey>();
 
         for (let index = 0; index < this.length; index++) {
             const element = this[index];
@@ -259,8 +257,8 @@ if (isNullOrUndefined(Array.prototype.withoutDuplicateBy)) {
                 continue;
             }
 
-            if (!seenKeys.includes(key)) {
-                seenKeys.push(key);
+            if (!seenKeys.has(key)) {
+                seenKeys.add(key);
                 result.push(element);
             }
         }

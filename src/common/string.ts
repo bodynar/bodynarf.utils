@@ -58,9 +58,9 @@ if (isNullOrUndefined(String.prototype.format)) {
     String.prototype.format = function (...args: Array<unknown>) {
         let result = this as string;
 
-        [...args].forEach((arg: unknown, i: number) => {
-            result = result.replace(`{${i}}`, String(arg));
-        });
+        for (let i = 0; i < args.length; i++) {
+            result = result.replace(`{${i}}`, String(args[i]));
+        }
 
         return result;
     };
@@ -86,6 +86,9 @@ if (isNullOrUndefined(String.prototype.isNullOrEmpty)) {
 
 if (isNullOrUndefined(String.prototype.isNullOrWhiteSpace)) {
     String.prototype.isNullOrWhiteSpace = function () {
-        return this.isNullOrEmpty() || this.trim().length === 0;
+        if (isNullish(this)) {
+            return true;
+        }
+        return this.isEmpty() || this.trim().length === 0;
     };
 }
