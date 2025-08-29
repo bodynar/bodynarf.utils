@@ -226,7 +226,13 @@ if (isNullOrUndefined(Array.prototype.withoutDuplicate)) {
             return [];
         }
 
-        return this.filter((x, i, a) => a.indexOf(x) === i);
+        const seen = new Set<TItem>();
+
+        for (const item of this) {
+            seen.add(item);
+        }
+
+        return [...seen];
     };
 }
 
@@ -289,7 +295,6 @@ if (isNullOrUndefined(Array.prototype.withoutEmpty)) {
  * Remove duplicate values from array. Modifies the array
  * @param array Array with possible duplicates
  * @param keySelector Selector of key values
- * @returns 
  */
 const removeDuplicateByFn = function <TItem extends any, TKey>(array: Array<TItem>, keySelector?: (item: TItem) => TKey): void {
     if (array.length === 0) {
@@ -297,7 +302,6 @@ const removeDuplicateByFn = function <TItem extends any, TKey>(array: Array<TIte
     }
 
     const seenKeys: Array<any> = [];
-    const removeMarker: string = generateGuid();
 
     for (let index = 0; index < array.length; index++) {
         const element = array[index];
@@ -306,11 +310,10 @@ const removeDuplicateByFn = function <TItem extends any, TKey>(array: Array<TIte
         if (!seenKeys.includes(key)) {
             seenKeys.push(key);
         } else {
-            array[index] = removeMarker as TItem;
+            array.splice(index, 1);
+            index--;
         }
     }
-
-    array.removeByFn(x => x === removeMarker);
 };
 
 // #endregion

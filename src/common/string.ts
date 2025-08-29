@@ -33,6 +33,24 @@ declare global {
          * @returns {string} String
          */
         capitalize(): string;
+
+        /**
+         * Check is string is empty
+         * @returns The flag specifies that the string is empty
+         */
+        isEmpty(): boolean;
+
+        /**
+         * Check is string is nullish or empty
+         * @returns The flag specifies that the string is empty, null or undefined
+         */
+        isNullOrEmpty(): boolean;
+
+        /**
+         * Check is string is nullish or empty or white space only
+         * @returns The flag specifies that the string is empty, null, undefined, or consists only of spaces.
+         */
+        isNullOrWhiteSpace(): boolean;
     }
 }
 
@@ -51,5 +69,23 @@ if (isNullOrUndefined(String.prototype.format)) {
 if (isNullOrUndefined(String.prototype.capitalize)) {
     String.prototype.capitalize = function () {
         return this.charAt(0).toUpperCase() + this.slice(1);
+    };
+}
+
+if (isNullOrUndefined(String.prototype.isEmpty)) {
+    String.prototype.isEmpty = function () {
+        return this?.length === 0;
+    };
+}
+
+if (isNullOrUndefined(String.prototype.isNullOrEmpty)) {
+    String.prototype.isNullOrEmpty = function () {
+        return isNullish(this) || this.isEmpty();
+    };
+}
+
+if (isNullOrUndefined(String.prototype.isNullOrWhiteSpace)) {
+    String.prototype.isNullOrWhiteSpace = function () {
+        return this.isNullOrEmpty() || this.trim().length === 0;
     };
 }
