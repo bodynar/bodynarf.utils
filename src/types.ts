@@ -2,6 +2,12 @@
 export type Nullish = null | undefined;
 
 /**
+ * Concrete type or `null`
+ * @template T Concrete type
+ */
+export type Nullable<T> = T | null;
+
+/**
  * Merge of two types.
  * In case of duplicate keys type TStrong keys will overwrite TWeak keys
  * @template TWeak Type with keys, which can be overwritten in case of duplicate
@@ -22,3 +28,6 @@ export type SimpleFn<TResult> = () => TResult;
 
 /** Simple function with 0 in\out parameters */
 export type ActionFn = SimpleFn<void>;
+
+/** Simple asynchronous function with 0 in\out parameters */
+export type ActionFnAsync = SimpleFn<Promise<void>>;
