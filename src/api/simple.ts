@@ -6,6 +6,8 @@ import { RequestConfiguration } from ".";
  * Error caused during fetch request
  */
 export class HttpError extends Error {
+    name = "HttpError";
+
     /**
      * Create an instance of `HttpError`
      * @param response Fetch response
