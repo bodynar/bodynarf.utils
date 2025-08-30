@@ -1,13 +1,10 @@
-const hashSigns: Array<string> = [];
-
-/** Generating hash symbols for guid generation process */
-const generateHashSigns = (): void => {
-    if (hashSigns.length === 0) {
-        for (let i = 0; i < 256; i++) {
-            hashSigns[i] = (i < 16 ? "0" : "") + (i).toString(16);
-        }
+const hashSigns: Array<string> = (() => {
+    const arr: Array<string> = new Array(256);
+    for (let i = 0; i < 256; i++) {
+        arr[i] = (i < 16 ? "0" : "") + (i).toString(16);
     }
-};
+    return arr;
+})();
 
 /**
  * Generate hex-guid
@@ -18,10 +15,6 @@ export const generateGuid = (): string => {
     const d1 = Math.random() * 0xffffffff | 0;
     const d2 = Math.random() * 0xffffffff | 0;
     const d3 = Math.random() * 0xffffffff | 0;
-
-    if (hashSigns.length === 0) {
-        generateHashSigns();
-    }
 
     return hashSigns[d0 & 0xff] + hashSigns[d0 >> 8 & 0xff] + hashSigns[d0 >> 16 & 0xff] + hashSigns[d0 >> 24 & 0xff] + "-" +
         hashSigns[d1 & 0xff] + hashSigns[d1 >> 8 & 0xff] + "-" + hashSigns[d1 >> 16 & 0x0f | 0x40] + hashSigns[d1 >> 24 & 0xff] + "-" +

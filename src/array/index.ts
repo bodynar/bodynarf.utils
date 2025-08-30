@@ -1,5 +1,5 @@
-import { isNullish, isNullOrEmpty, isNullOrUndefined } from "../common";
-import { generateGuid } from "../guid";
+import { isNullOrEmpty } from "../string";
+import { isNullish, isNullOrUndefined } from "../common/checks";
 
 /**
  * Grouped items by specified key
@@ -129,8 +129,7 @@ if (isNullOrUndefined(Array.prototype.trimNotDefinedValuesBy)) {
         const excludeIndexes: Array<number> = [];
         let index = 0;
 
-        // eslint-disable-next-line no-constant-condition
-        while (true) {
+        while (index < this.length) {
             const keyValue = keySelector(this[index]);
 
             if (isNullOrUndefined(keyValue)) {
@@ -142,8 +141,7 @@ if (isNullOrUndefined(Array.prototype.trimNotDefinedValuesBy)) {
 
         index = this.length - 1;
 
-        // eslint-disable-next-line no-constant-condition
-        while (true) {
+        while (index >= 0) {
             const keyValue = keySelector(this[index]);
 
             if (isNullOrUndefined(keyValue)) {
@@ -184,23 +182,22 @@ if (isNullOrUndefined(Array.prototype.remove)) {
 
 if (isNullOrUndefined(Array.prototype.removeByFn)) {
     Array.prototype.removeByFn = function <TItem>(predicate: (item: TItem) => boolean): void {
-        while (true) {
-            const index = this.findIndex(predicate);
-
-            if (index >= 0) {
-                this.splice(index, 1);
-                continue;
-            }
-
-            break;
+        let index;
+        while ((index = this.findIndex(predicate)) >= 0) {
+            this.splice(index, 1);
         }
     };
 }
 
 if (isNullOrUndefined(Array.prototype.removeByKey)) {
     Array.prototype.removeByKey = function <TItem>(keys: Array<TItem[keyof TItem]>, key: keyof TItem): void {
-        this.filter(item => !keys.includes(item[key]))
-            .forEach(item => this.remove(item));
+        const keysSet = new Set(keys);
+
+        for (let i = this.length - 1; i >= 0; i--) {
+            if (keysSet.has(this[i][key])) {
+                this.splice(i, 1);
+            }
+        }
     };
 }
 
@@ -226,7 +223,13 @@ if (isNullOrUndefined(Array.prototype.withoutDuplicate)) {
             return [];
         }
 
-        return this.filter((x, i, a) => a.indexOf(x) === i);
+        const seen = new Set<TItem>();
+
+        for (const item of this) {
+            seen.add(item);
+        }
+
+        return [...seen];
     };
 }
 
@@ -240,7 +243,7 @@ if (isNullOrUndefined(Array.prototype.withoutDuplicateBy)) {
         }
 
         const result: Array<TItem> = [];
-        const seenKeys: Array<TKey> = [];
+        const seenKeys = new Set<TKey>();
 
         for (let index = 0; index < this.length; index++) {
             const element = this[index];
@@ -253,8 +256,8 @@ if (isNullOrUndefined(Array.prototype.withoutDuplicateBy)) {
                 continue;
             }
 
-            if (!seenKeys.includes(key)) {
-                seenKeys.push(key);
+            if (!seenKeys.has(key)) {
+                seenKeys.add(key);
                 result.push(element);
             }
         }
@@ -289,7 +292,6 @@ if (isNullOrUndefined(Array.prototype.withoutEmpty)) {
  * Remove duplicate values from array. Modifies the array
  * @param array Array with possible duplicates
  * @param keySelector Selector of key values
- * @returns 
  */
 const removeDuplicateByFn = function <TItem extends any, TKey>(array: Array<TItem>, keySelector?: (item: TItem) => TKey): void {
     if (array.length === 0) {
@@ -297,7 +299,6 @@ const removeDuplicateByFn = function <TItem extends any, TKey>(array: Array<TIte
     }
 
     const seenKeys: Array<any> = [];
-    const removeMarker: string = generateGuid();
 
     for (let index = 0; index < array.length; index++) {
         const element = array[index];
@@ -306,11 +307,10 @@ const removeDuplicateByFn = function <TItem extends any, TKey>(array: Array<TIte
         if (!seenKeys.includes(key)) {
             seenKeys.push(key);
         } else {
-            array[index] = removeMarker as TItem;
+            array.splice(index, 1);
+            index--;
         }
     }
-
-    array.removeByFn(x => x === removeMarker);
 };
 
 // #endregion

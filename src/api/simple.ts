@@ -6,6 +6,8 @@ import { RequestConfiguration } from ".";
  * Error caused during fetch request
  */
 export class HttpError extends Error {
+    name = "HttpError";
+
     /**
      * Create an instance of `HttpError`
      * @param response Fetch response
@@ -135,7 +137,7 @@ const internalFetchAsync = async (
     requestParams: RequestInit,
     config?: RequestConfiguration
 ): Promise<Response> => {
-    let timeoutRequestCallNumber: Optional<number> = undefined;
+    let timeoutRequestCallNumber: Optional<NodeJS.Timeout> = undefined;
 
     const timeout = config?.timeout ?? 0;
 

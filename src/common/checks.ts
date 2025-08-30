@@ -51,15 +51,17 @@ export const getValueOrDefault = <TValue>(value: Optional<TValue>, defaultValue:
  * @returns `true` if object empty or contains null\undefined values
  */
 export const isObjectEmpty = (object: any): boolean => {
-    if (isNullOrUndefined(object)) {
+    if (isNullish(object)) {
         return true;
     }
 
-    const result = Object.entries(object)
-        .reduce(
-            (result, [value]) => isNullOrUndefined(value[1]) && result
-            , true
-        );
+    for (const key in object) {
+        if (Object.prototype.hasOwnProperty.call(object, key)) {
+            if (!isNullish(object[key])) {
+                return false;
+            }
+        }
+    }
 
-    return result;
+    return true;
 };

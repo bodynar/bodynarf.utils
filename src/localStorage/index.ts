@@ -1,4 +1,4 @@
-import { Optional, isNullOrEmpty, isStringEmpty } from "..";
+import { Optional, isNullish, isStringEmpty } from "..";
 
 /** shortcut to local storage */
 const storage: Storage = window.localStorage;
@@ -15,7 +15,7 @@ const hasRecord = (key: string): boolean => {
 
     const record = storage.getItem(key);
 
-    return !isNullOrEmpty(record);
+    return !isNullish(record);
 };
 
 /**
@@ -30,7 +30,7 @@ const getRecord = <TValue>(key: string): Optional<TValue> => {
 
     const record = storage.getItem(key);
 
-    if (isNullOrEmpty(record)) {
+    if (isNullish(record)) {
         return undefined;
     }
 

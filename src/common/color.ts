@@ -1,5 +1,8 @@
 import { Optional, isNullOrEmpty, isNullish } from "..";
 
+const rgbRegex = /^rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)$/;
+const rgbaRegex = /^rgba\(\s*(?:(\d{1,3}),\s*){3}(0(?:\.\d+)?|1(?:\.0+)?)\s*\)$/;
+
 /** Color RGB model*/
 export interface Color {
     /** Red intensity */
@@ -34,7 +37,7 @@ export function isRgbColor(colorString: string): boolean {
         return false;
     }
 
-    return colorString.trim().startsWith("rgb");
+    return rgbRegex.test(colorString.trim()) || rgbaRegex.test(colorString.trim());
 }
 
 /**
@@ -151,7 +154,7 @@ export function getFontColor(color: Color): string {
         + color.green * 0.587
         + color.blue * 0.114;
 
-    return intensity > 125 ? blackHex : whiteHex;
+    return intensity >= 125 ? blackHex : whiteHex;
 }
 
 /**

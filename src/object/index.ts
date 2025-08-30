@@ -16,9 +16,7 @@ export const ensurePropertyDefined = <T extends object>(object: T, propertyName:
         throw new Error("Parameter \"propertyName\" is not defined");
     }
 
-    const isKeyDefined: boolean = Object.keys(object).includes(propertyName);
-
-    if (!isKeyDefined) {
+    if (!(propertyName in object)) {
         throw new Error(`Key "${propertyName}" is not defined in object`);
     }
 };
@@ -37,9 +35,7 @@ export const getPropertyValue = <TResult>(object: Record<string, any>, propertyN
         throw new Error("Parameter \"propertyName\" is not defined");
     }
 
-    const isKeyDefined: boolean = Object.keys(object).includes(propertyName);
-
-    return isKeyDefined
+    return propertyName in object
         ? object[propertyName] as TResult
         : undefined;
 };

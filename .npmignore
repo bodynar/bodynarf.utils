@@ -354,3 +354,5 @@ MigrationBackup/
 
 
 .github/
+coverage/
+tests/
