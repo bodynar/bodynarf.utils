@@ -28,7 +28,7 @@
         "test": "vitest",
         "test:run": "vitest run",
         "test:coverage": "vitest run --coverage",
-        "copy_main": "copyfiles package.json readme.md dist",
+        "copy_main": "copyfiles package.json readme.md .npmignore dist",
         "transfer": "npm run copy_main",
         "build_transfer": "npm run build && npm run transfer",
         "prepublish": "npm run test:run && npm run build_transfer && cd dist && npm pack",
