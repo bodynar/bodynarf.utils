@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 
-import { delayReject } from "../../src/function";
+import { delayReject } from "../../src/promise";
 
 describe("delayReject", () => {
     it("should reject promise after specified time with correct error", async () => {

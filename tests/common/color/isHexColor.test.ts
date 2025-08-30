@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest";
+
 import { isHexColor } from "../../../src/common/color";
 
 describe("isHexColor", () => {
