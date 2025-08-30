@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 
-import "../../../src/common/string";
+import "../../../src/string";
 
 describe("String.prototype.isEmpty", () => {
     it("should return true for empty strings", () => {

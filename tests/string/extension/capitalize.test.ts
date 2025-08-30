@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 
-import "../../../src/common/string";
+import "../../../src/string";
 
 describe("String.prototype.capitalize", () => {
     it("should capitalize first letter of string", () => {

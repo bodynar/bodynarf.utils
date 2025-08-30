@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 
-import { isStringEmpty } from "../../../src/common/string";
+import { isStringEmpty } from "../../src/string";
 
 describe("isStringEmpty", () => {
     it("should return true for empty strings", () => {

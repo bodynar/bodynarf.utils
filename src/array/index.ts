@@ -1,4 +1,5 @@
-import { isNullish, isNullOrEmpty, isNullOrUndefined } from "../common";
+import { isNullOrEmpty } from "../string";
+import { isNullish, isNullOrUndefined } from "../common/checks";
 
 /**
  * Grouped items by specified key
