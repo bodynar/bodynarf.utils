@@ -5,6 +5,7 @@
         "name": "Artem",
         "email": "bodynar@gmail.com"
     },
+    "license": "MIT",
     "repository": {
         "url": "https://github.com/bodynar/bodynarf.utils",
         "type": "git"
@@ -30,8 +31,8 @@
         "copy_main": "copyfiles package.json readme.md dist",
         "transfer": "npm run copy_main",
         "build_transfer": "npm run build && npm run transfer",
-        "prepublish": "npm run build_transfer && cd dist && npm pack",
-        "publish_pkg": "npm run build_transfer && cd dist && npm publish --access=public"
+        "prepublish": "npm run test:run && npm run build_transfer && cd dist && npm pack",
+        "publish_pkg": "npm run test:run && npm run build_transfer && cd dist && npm publish --access=public"
     },
     "devDependencies": {
         "@vitest/coverage-v8": "^0.34.0",
