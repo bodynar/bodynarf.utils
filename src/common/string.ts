@@ -59,8 +59,10 @@ if (isNullOrUndefined(String.prototype.format)) {
         let result = this as string;
 
         for (let i = 0; i < args.length; i++) {
-            result = result.replace(`{${i}}`, String(args[i]));
+            result = result.replaceAll(`{${i}}`, String(args[i]));
         }
+
+        result = result.replaceAll(/\{\d+\}/g, "");
 
         return result;
     };

@@ -190,10 +190,8 @@ if (isNullOrUndefined(Array.prototype.removeByFn)) {
 
 if (isNullOrUndefined(Array.prototype.removeByKey)) {
     Array.prototype.removeByKey = function <TItem>(keys: Array<TItem[keyof TItem]>, key: keyof TItem): void {
-        // Создаем Set для быстрого поиска ключей
         const keysSet = new Set(keys);
 
-        // Проходим по массиву с конца к началу, чтобы индексы не сбивались при удалении
         for (let i = this.length - 1; i >= 0; i--) {
             if (keysSet.has(this[i][key])) {
                 this.splice(i, 1);
