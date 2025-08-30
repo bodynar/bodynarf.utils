@@ -2,10 +2,10 @@
 export type Nullish = null | undefined;
 
 /**
- * Concrete type or `null`
+ * Concrete type or `null` or `undefined`
  * @template T Concrete type
  */
-export type Nullable<T> = T | null;
+export type Nullable<T> = T | Nullish;
 
 /**
  * Merge of two types.
