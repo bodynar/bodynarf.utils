@@ -151,6 +151,14 @@ const internalFetchAsync = async (
         };
     }
 
+    requestParams = {
+        ...requestParams,
+        headers: {
+            ...requestParams.headers,
+            ...config?.headers,
+        }
+    }
+
     const response: Response = await fetch(uri, requestParams);
 
     if (!isNullOrUndefined(timeoutRequestCallNumber)) {
