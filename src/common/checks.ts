@@ -44,24 +44,3 @@ export const isUndefined = <T>(value: T): boolean => {
 export const getValueOrDefault = <TValue>(value: Optional<TValue>, defaultValue: TValue): TValue => {
     return isNullish(value) ? defaultValue : value;
 };
-
-/**
- * Check is object empty or consists of empty values
- * @param object Object to check
- * @returns `true` if object empty or contains null\undefined values
- */
-export const isObjectEmpty = (object: any): boolean => {
-    if (isNullish(object)) {
-        return true;
-    }
-
-    for (const key in object) {
-        if (Object.prototype.hasOwnProperty.call(object, key)) {
-            if (!isNullish(object[key])) {
-                return false;
-            }
-        }
-    }
-
-    return true;
-};
