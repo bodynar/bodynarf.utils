@@ -1,16 +1,29 @@
 /**
- * Форматирует дату в строку согласно заданному формату
- * @param date - Дата для форматирования
- * @param format - Строка формата (например, "dd.MM.yyyy HH:mm:ss")
- * @returns Отформатированная строка даты
+ * Formats the date to a string according to the specified format
+ * @param date - Date to format
+ * @param format - Format string (e.g., "dd.MM.yyyy HH:mm:ss")
+ * @returns Formatted date string
  *
- * Поддерживаемые токены:
- * - dd: день месяца (01-31)
- * - MM: месяц (01-12)
- * - yyyy: год (4 цифры)
- * - HH: часы (00-23)
- * - mm: минуты (00-59)
- * - ss: секунды (00-59)
+ * Supported tokens:
+ * - d: day of month (1-31)
+ * - dd: day of month (01-31)
+ * - M: month (1-12)
+ * - MM: month (01-12)
+ * - yyyy: year (4 digits)
+ * - H: hours (0-23)
+ * - HH: hours (00-23)
+ * - m: minutes (0-59)
+ * - mm: minutes (00-59)
+ * - s: seconds (0-59)
+ * - ss: seconds (00-59)
+ *
+ * Examples:
+ * - "dd.MM.yyyy" => "15.06.2023"
+ * - "d.M.yyyy" => "15.6.2023"
+ * - "HH:mm:ss" => "14:30:45"
+ * - "H:m:s" => "14:30:45"
+ * - "dd.MM.yyyy HH:mm:ss" => "15.06.2023 14:30:45"
+ * - "yyyy-MM-dd" => "2023-06-15"
  */
 export function formatDate(date: Date, format: string): string {
 	const tokens: Record<string, () => string> = {

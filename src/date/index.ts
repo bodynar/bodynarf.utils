@@ -1,4 +1,5 @@
 export { formatDate } from "./format";
+export { isWeekend, isLeapYear, getDaysInMonth } from "./checks";
 
 /**
  * Расширение прототипа Date методом format

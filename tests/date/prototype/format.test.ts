@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 
 // Импортируем файл, чтобы активировать расширение прототипа
-import "../../src/date";
+import "../../../src/date";
 
 describe("Date.prototype.format", () => {
 	// Фиксируем дату для тестов
