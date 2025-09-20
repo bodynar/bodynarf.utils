@@ -1,4 +1,4 @@
-import { Optional, isStringEmpty, isNullOrUndefined } from "..";
+import { Optional, isStringEmpty, isNullOrUndefined, isNullish } from "..";
 
 /**
  * Check is key declared in object. Throws errors if not
@@ -62,3 +62,132 @@ export const getPropertyValueWithCheck = <TResult>(object: Record<string, unknow
 
     return value;
 };
+
+/**
+ * Picks specific properties from an object
+ * @param obj - Source object
+ * @param keys - Array of keys to pick
+ * @returns New object with picked properties
+ */
+export function pick(obj: object, keys: Array<string>): object {
+    if (isNullish(obj)) {
+        return {};
+    }
+
+    const result: any = {};
+
+    for (const key of keys) {
+        if (key in obj) {
+            result[key] = (obj as any)[key];
+        }
+    }
+
+    return result;
+}
+
+/**
+ * Omits specific properties from an object
+ * @param obj - Source object
+ * @param keys - Array of keys to omit
+ * @returns New object without omitted properties
+ */
+export function omit(obj: object, keys: Array<string>): object {
+    if (isNullish(obj)) {
+        return {};
+    }
+
+    const result: any = { ...obj };
+
+    for (const key of keys) {
+        delete result[key];
+    }
+
+    return result;
+}
+
+/**
+ * Checks if the value is an object
+ * @param value - Value to check
+ * @returns true if the value is an object, false otherwise
+ */
+export function isObject(value: unknown): value is object {
+    return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+/**
+ * Checks if the object is empty
+ * @param obj - Object to check
+ * @returns true if the object is empty, false otherwise
+ */
+export function isObjectEmpty(obj: object): boolean {
+    if (isNullish(obj)) {
+        return true;
+    }
+
+    return Object.keys(obj).length === 0;
+}
+
+/**
+ * Deep clones an object
+ * @param obj - Object to clone
+ * @returns Deep cloned object
+ */
+export function deepClone<T>(obj: T): T {
+    if (isNullish(obj)) {
+        return obj;
+    }
+
+    if (typeof obj !== "object") {
+        return obj;
+    }
+
+    if (obj instanceof Date) {
+        return new Date(obj.getTime()) as unknown as T;
+    }
+
+    if (Array.isArray(obj)) {
+        return obj.map(item => deepClone(item)) as unknown as T;
+    }
+
+    if (typeof obj === "object") {
+        const clonedObj = {} as T;
+        for (const key in obj) {
+            if (Object.prototype.hasOwnProperty.call(obj, key)) {
+                clonedObj[key] = deepClone(obj[key]);
+            }
+        }
+        return clonedObj;
+    }
+
+    return obj;
+}
+
+/**
+ * Merges two objects
+ * @param obj1 - First object
+ * @param obj2 - Second object
+ * @returns Merged object
+ */
+export function mergeObjects(obj1: object, obj2: object): object {
+    if (isNullish(obj1)) {
+        return obj2;
+    }
+
+    if (isNullish(obj2)) {
+        return obj1;
+    }
+
+    const result: any = deepClone(obj1);
+
+    for (const key in obj2) {
+        if (Object.prototype.hasOwnProperty.call(obj2, key)) {
+            if (isObject((obj2 as any)[key]) && isObject(result[key])) {
+                result[key] = mergeObjects(result[key], (obj2 as any)[key]);
+            } else {
+                result[key] = (obj2 as any)[key];
+            }
+        }
+    }
+
+    return result;
+}

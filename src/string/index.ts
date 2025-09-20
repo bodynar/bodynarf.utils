@@ -114,6 +114,27 @@ export const toSnakeCase = (str: string): string => {
 };
 
 /**
+ * Convert string to kebab-case
+ * @param str String to convert
+ * @returns String in kebab-case format
+ * @example
+ * ```typescript
+ * toKebabCase("hello world"); // "hello-world"
+ * toKebabCase("helloWorld"); // "hello-world"
+ * ```
+ */
+export const toKebabCase = (str: string): string => {
+    if (isNullish(str)) {
+        return "";
+    }
+
+    return str
+        .replace(/([a-z])([A-Z])/g, "$1-$2")
+        .replace(/\s+/g, "-")
+        .replace(/_+/g, "-")
+        .toLowerCase();
+};
+/**
  * Escape HTML special characters
  * @param str String to escape
  * @returns Escaped string
