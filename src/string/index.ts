@@ -136,4 +136,4 @@ export const escapeHtml = (str: string): string => {
         .replace(/'/g, "&#039;");
 };
 
-export * from "./extension";
+export * from "./prototype";
