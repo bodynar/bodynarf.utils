@@ -5,24 +5,24 @@ export default defineConfig({
 	description: "Documentation for @bodynarf/utils library",
 	themeConfig: {
 		nav: [
-			{ text: 'Home', link: '/' },
-			{ text: 'API', link: '/api/' }
+			{ text: "Home", link: "/" },
+			{ text: "API", link: "/api/" }
 		],
 		sidebar: [
 			{
-				text: 'API',
+				text: "API",
 				items: [
-					{ text: 'Common', link: '/api/common' },
-					{ text: 'Array', link: '/api/array' },
-					{ text: 'Function', link: '/api/function' },
-					{ text: 'String', link: '/api/string' },
-					{ text: 'Object', link: '/api/object' },
-					{ text: 'Date', link: '/api/date' },
-					{ text: 'Event', link: '/api/event' },
-					{ text: 'GUID', link: '/api/guid' },
-					{ text: 'LocalStorage', link: '/api/localstorage' },
-					{ text: 'Promise', link: '/api/promise' },
-					{ text: 'API', link: '/api/api' }
+					{ text: "Common", link: "/api/common" },
+					{ text: "Array", link: "/api/array" },
+					{ text: "Function", link: "/api/function" },
+					{ text: "String", link: "/api/string" },
+					{ text: "Object", link: "/api/object" },
+					{ text: "Date", link: "/api/date" },
+					{ text: "Event", link: "/api/event" },
+					{ text: "GUID", link: "/api/guid" },
+					{ text: "LocalStorage", link: "/api/localstorage" },
+					{ text: "Promise", link: "/api/promise" },
+					{ text: "API", link: "/api/api" }
 				]
 			}
 		]

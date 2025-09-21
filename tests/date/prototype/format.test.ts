@@ -1,11 +1,11 @@
 import { describe, it, expect } from "vitest";
 
-// Импортируем файл, чтобы активировать расширение прототипа
+// Import the file to activate the prototype extension
 import "../../../src/date";
 
 describe("Date.prototype.format", () => {
-	// Фиксируем дату для тестов
-	const testDate = new Date(2023, 5, 15, 14, 30, 45); // 15 июня 2023, 14:30:45
+	// Fix the date for tests
+	const testDate = new Date(2023, 5, 15, 14, 30, 45); // June 15, 2023, 14:30:45
 
 	it("should format date with dd.MM.yyyy", () => {
 		const result = testDate.format("dd.MM.yyyy");
@@ -38,31 +38,31 @@ describe("Date.prototype.format", () => {
 	});
 
 	it("should handle single digit days correctly with d token", () => {
-		const date = new Date(2023, 5, 5, 14, 30, 45); // 5 июня 2023
+		const date = new Date(2023, 5, 5, 14, 30, 45); // June 5, 2023
 		const result = date.format("d.MM.yyyy");
 		expect(result).toBe("5.06.2023");
 	});
 
 	it("should handle single digit months correctly with M token", () => {
-		const date = new Date(2023, 2, 15, 14, 30, 45); // 15 марта 2023
+		const date = new Date(2023, 2, 15, 14, 30, 45); // March 15, 2023
 		const result = date.format("dd.M.yyyy");
 		expect(result).toBe("15.3.2023");
 	});
 
 	it("should handle single digit hours correctly with H token", () => {
-		const date = new Date(2023, 5, 15, 5, 30, 45); // 5 часов утра
+		const date = new Date(2023, 5, 15, 5, 30, 45); // 5 AM
 		const result = date.format("dd.MM.yyyy H:mm:ss");
 		expect(result).toBe("15.06.2023 5:30:45");
 	});
 
 	it("should handle single digit minutes correctly with m token", () => {
-		const date = new Date(2023, 5, 15, 14, 5, 45); // 5 минут
+		const date = new Date(2023, 5, 15, 14, 5, 45); // 5 minutes
 		const result = date.format("dd.MM.yyyy HH:m:ss");
 		expect(result).toBe("15.06.2023 14:5:45");
 	});
 
 	it("should handle single digit seconds correctly with s token", () => {
-		const date = new Date(2023, 5, 15, 14, 30, 5); // 5 секунд
+		const date = new Date(2023, 5, 15, 14, 30, 5); // 5 seconds
 		const result = date.format("dd.MM.yyyy HH:mm:s");
 		expect(result).toBe("15.06.2023 14:30:5");
 	});
@@ -76,7 +76,7 @@ describe("Date.prototype.format", () => {
 	});
 
 	it("should handle edge cases like beginning of year", () => {
-		const newYear = new Date(2023, 0, 1, 0, 0, 0); // 1 января 2023
+		const newYear = new Date(2023, 0, 1, 0, 0, 0); // January 1, 2023
 		const result = newYear.format("dd.MM.yyyy");
 		expect(result).toBe("01.01.2023");
 	});
