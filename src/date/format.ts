@@ -43,7 +43,7 @@ export function formatDate(date: Date, format: string): string {
 		"ss": () => date.getSeconds().toString().padStart(2, "0"),
 	};
 
-	// Заменяем токены в формате на соответствующие значения
+	// Replace tokens in the format string with corresponding values
 	// Use a regular expression to replace longer tokens first
 	// to avoid partial replacement (for example, "MM" -> "M" + "M")
 	const tokenKeys = Object.keys(tokens).sort((a, b) => b.length - a.length);
