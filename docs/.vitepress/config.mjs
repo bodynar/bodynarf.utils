@@ -3,6 +3,7 @@ import { defineConfig } from "vitepress";
 export default defineConfig({
 	title: "@bodynarf/utils",
 	description: "Documentation for @bodynarf/utils library",
+	base: "/bodynarf.utils/",
 	themeConfig: {
 		nav: [
 			{ text: "Home", link: "/" },
