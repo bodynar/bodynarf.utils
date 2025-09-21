@@ -44,8 +44,8 @@ export function formatDate(date: Date, format: string): string {
 	};
 
 	// Заменяем токены в формате на соответствующие значения
-	// Используем регулярное выражение для замены более длинных токенов первыми
-	// чтобы избежать частичной замены (например, "MM" -> "M" + "M")
+	// Use a regular expression to replace longer tokens first
+	// to avoid partial replacement (for example, "MM" -> "M" + "M")
 	const tokenKeys = Object.keys(tokens).sort((a, b) => b.length - a.length);
 
 	let result = format;
