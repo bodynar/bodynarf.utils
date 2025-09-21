@@ -311,7 +311,7 @@ if (isNullOrUndefined(Array.prototype.removeByKey)) {
         const keysSet = new Set(keys);
 
         for (let i = this.length - 1; i >= 0; i--) {
-            if (!keysSet.has(this[i][key])) {
+            if (keysSet.has(this[i][key])) {
                 this.splice(i, 1);
             }
         }
