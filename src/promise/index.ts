@@ -176,6 +176,12 @@ export const concurrent = <T>(
  * @param time Delay time in milliseconds
  * @param result Promise result
  * @returns Delayed resolved promise
+ * @example
+ * ```typescript
+ * // Resolve with "Hello" after 1 second
+ * delayResolve(1000, "Hello")
+ *     .then(result => console.log(result)); // Logs: "Hello" after 1 second
+ * ```
  */
 export const delayResolve = <TResult>(time: number, result: TResult): Promise<TResult> => {
     return new Promise(resolve => setTimeout(() => resolve(result), time));
@@ -186,6 +192,12 @@ export const delayResolve = <TResult>(time: number, result: TResult): Promise<TR
  * @param time Delay time in milliseconds
  * @param error Promise error
  * @returns Delayed rejected promise
+ * @example
+ * ```typescript
+ * // Reject with "Timeout" error after 1 second
+ * delayReject(1000, "Timeout")
+ *     .catch(error => console.error(error)); // Logs: "Timeout" after 1 second
+ * ```
  */
 export const delayReject = <TResult>(time: number, error: string): Promise<TResult> => {
     return new Promise<TResult>((_, reject) => setTimeout(() => reject(error), time));

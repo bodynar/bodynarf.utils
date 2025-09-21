@@ -23,31 +23,58 @@ declare global {
 		 * - s: seconds (0-59)
 		 * - ss: seconds (00-59)
 		 *
-		 * Examples:
-		 * - "dd.MM.yyyy" => "15.06.2023"
-		 * - "d.M.yyyy" => "15.6.2023"
-		 * - "HH:mm:ss" => "14:30:45"
-		 * - "H:m:s" => "14:30:45"
-		 * - "dd.MM.yyyy HH:mm:ss" => "15.06.2023 14:30:45"
-		 * - "yyyy-MM-dd" => "2023-06-15"
+		 * @example
+		 * ```typescript
+		 * const date = new Date(2023, 5, 15, 14, 30, 45); // June 15, 2023 14:30:45
+		 * date.format("dd.MM.yyyy"); // "15.06.2023"
+		 * date.format("d.M.yyyy"); // "15.6.2023"
+		 * date.format("HH:mm:ss"); // "14:30:45"
+		 * date.format("H:m:s"); // "14:30:45"
+		 * date.format("dd.MM.yyyy HH:mm:ss"); // "15.06.2023 14:30:45"
+		 * date.format("yyyy-MM-dd"); // "2023-06-15"
+		 * ```
 		 */
 		format(format: string): string;
 
 		/**
 		 * Checks if the date is a weekend day (Saturday or Sunday)
 		 * @returns true if the date is a weekend, false otherwise
+		 * @example
+		 * ```typescript
+		 * const saturday = new Date(2023, 5, 17); // Saturday, June 17, 2023
+		 * const monday = new Date(2023, 5, 19); // Monday, June 19, 2023
+		 *
+		 * saturday.isWeekend(); // true
+		 * monday.isWeekend(); // false
+		 * ```
 		 */
 		isWeekend(): boolean;
 
 		/**
 		 * Checks if the date's year is a leap year
 		 * @returns true if the year is a leap year, false otherwise
+		 * @example
+		 * ```typescript
+		 * const date1 = new Date(2020, 5, 17); // June 17, 2020
+		 * const date2 = new Date(2021, 5, 17); // June 17, 2021
+		 *
+		 * date1.isLeapYear(); // true
+		 * date2.isLeapYear(); // false
+		 * ```
 		 */
 		isLeapYear(): boolean;
 
 		/**
 		 * Returns the number of days in the date's month
 		 * @returns Number of days in the month
+		 * @example
+		 * ```typescript
+		 * const date1 = new Date(2023, 1, 15); // February 15, 2023
+		 * const date2 = new Date(2020, 1, 15); // February 15, 2020 (leap year)
+		 *
+		 * date1.getDaysInMonth(); // 28
+		 * date2.getDaysInMonth(); // 29
+		 * ```
 		 */
 		getDaysInMonth(): number;
 	}

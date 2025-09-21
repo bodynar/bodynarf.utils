@@ -17,13 +17,16 @@
  * - s: seconds (0-59)
  * - ss: seconds (00-59)
  *
- * Examples:
- * - "dd.MM.yyyy" => "15.06.2023"
- * - "d.M.yyyy" => "15.6.2023"
- * - "HH:mm:ss" => "14:30:45"
- * - "H:m:s" => "14:30:45"
- * - "dd.MM.yyyy HH:mm:ss" => "15.06.2023 14:30:45"
- * - "yyyy-MM-dd" => "2023-06-15"
+ * @example
+ * ```typescript
+ * const date = new Date(2023, 5, 15, 14, 30, 45); // June 15, 2023 14:30:45
+ * formatDate(date, "dd.MM.yyyy"); // "15.06.2023"
+ * formatDate(date, "d.M.yyyy"); // "15.6.2023"
+ * formatDate(date, "HH:mm:ss"); // "14:30:45"
+ * formatDate(date, "H:m:s"); // "14:30:45"
+ * formatDate(date, "dd.MM.yyyy HH:mm:ss"); // "15.06.2023 14:30:45"
+ * formatDate(date, "yyyy-MM-dd"); // "2023-06-15"
+ * ```
  */
 export function formatDate(date: Date, format: string): string {
 	const tokens: Record<string, () => string> = {

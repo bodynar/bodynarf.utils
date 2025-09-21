@@ -1,11 +1,20 @@
 import { ActionFn } from "..";
-import { isNullOrUndefined } from "../common";
+import { isNullish } from "../common";
 
 /**
  * Perform action after some delay specified in milliseconds
  * @param time Delay time in milliseconds
  * @param action Action to perform after delay
  * @returns Number of delayed action to cancel via `clearTimeout`
+ * @example
+ * ```typescript
+ * const timeoutId = withDelay(1000, () => {
+ *   console.log("This will be logged after 1 second");
+ * });
+ *
+ * // To cancel the delayed action:
+ * // clearTimeout(timeoutId);
+ * ```
  */
 export const withDelay = (time: number, action: Function): number => {
     return setTimeout(action, time);
@@ -13,6 +22,12 @@ export const withDelay = (time: number, action: Function): number => {
 
 /**
  * Empty function
+ * @example
+ * ```typescript
+ * // Useful as a default callback or placeholder
+ * const callback = someCondition ? actualFunction : emptyFn;
+ * callback(); // Does nothing
+ * ```
  */
 export const emptyFn: ActionFn = () => { };
 
@@ -33,7 +48,7 @@ export const debounce = (fn: Function, delay: number): Function => {
     let timerId: NodeJS.Timeout | null = null;
 
     return function(...args: unknown[]) {
-        if (!isNullOrUndefined(timerId)) {
+        if (!isNullish(timerId)) {
             clearTimeout(timerId);
         }
 

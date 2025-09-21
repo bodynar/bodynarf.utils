@@ -21,18 +21,38 @@ declare global {
         /**
          * Check is string is empty
          * @returns The flag specifies that the string is empty
+         * @example
+         * ```typescript
+         * "".isEmpty(); // true
+         * "hello".isEmpty(); // false
+         * ```
          */
         isEmpty(): boolean;
 
         /**
          * Check is string is nullish or empty
          * @returns The flag specifies that the string is empty, null or undefined
+         * @example
+         * ```typescript
+         * "".isNullOrEmpty(); // true
+         * null.isNullOrEmpty(); // true
+         * undefined.isNullOrEmpty(); // true
+         * "hello".isNullOrEmpty(); // false
+         * ```
          */
         isNullOrEmpty(): boolean;
 
         /**
          * Check is string is nullish or empty or white space only
          * @returns The flag specifies that the string is empty, null, undefined, or consists only of spaces.
+         * @example
+         * ```typescript
+         * "".isNullOrWhiteSpace(); // true
+         * "   ".isNullOrWhiteSpace(); // true
+         * null.isNullOrWhiteSpace(); // true
+         * undefined.isNullOrWhiteSpace(); // true
+         * "hello".isNullOrWhiteSpace(); // false
+         * ```
          */
         isNullOrWhiteSpace(): boolean;
 
