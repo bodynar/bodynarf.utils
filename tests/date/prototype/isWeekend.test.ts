@@ -1,25 +1,25 @@
 import { describe, it, expect } from "vitest";
 
-// Импортируем файл, чтобы активировать расширение прототипа
+// Import file to activate prototype extension
 import "../../../src/date";
 
 describe("Date.prototype.isWeekend", () => {
 	it("should return true for Sunday", () => {
-		const sunday = new Date(2023, 5, 18); // 18 июня 2023 - воскресенье
+		const sunday = new Date(2023, 5, 18); // June 18, 2023 - Sunday
 		expect(sunday.isWeekend()).toBe(true);
 	});
 
 	it("should return true for Saturday", () => {
-		const saturday = new Date(2023, 5, 17); // 17 июня 2023 - суббота
+		const saturday = new Date(2023, 5, 17); // June 17, 2023 - Saturday
 		expect(saturday.isWeekend()).toBe(true);
 	});
 
 	it("should return false for weekdays", () => {
-		const monday = new Date(2023, 5, 19); // 19 июня 2023 - понедельник
-		const tuesday = new Date(2023, 5, 20); // 20 июня 2023 - вторник
-		const wednesday = new Date(2023, 5, 21); // 21 июня 2023 - среда
-		const thursday = new Date(2023, 5, 22); // 22 июня 2023 - четверг
-		const friday = new Date(2023, 5, 23); // 23 июня 2023 - пятница
+		const monday = new Date(2023, 5, 19); // June 19, 2023 - Monday
+		const tuesday = new Date(2023, 5, 20); // June 20, 2023 - Tuesday
+		const wednesday = new Date(2023, 5, 21); // June 21, 2023 - Wednesday
+		const thursday = new Date(2023, 5, 22); // June 22, 2023 - Thursday
+		const friday = new Date(2023, 5, 23); // June 23, 2023 - Friday
 
 		expect(monday.isWeekend()).toBe(false);
 		expect(tuesday.isWeekend()).toBe(false);
