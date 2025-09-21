@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 
-// Импортируем файл, чтобы активировать расширение прототипа
+// Import the file to activate the prototype extension
 import "../../../src/date";
 
 describe("Date.prototype.isLeapYear", () => {
