@@ -203,3 +203,39 @@ export function mergeObjects(obj1: object, obj2: object): object {
 
     return result;
 }
+
+/**
+ * Gets value from object by path
+ * @param obj - Source object
+ * @param path - Path to property (e.g. "user.address.street" or "users[0].name")
+ * @returns Value at path or undefined if path doesn't exist
+ */
+export function get(obj: object, path: string): any {
+    if (isNullish(obj) || isNullish(path)) {
+        return undefined;
+    }
+
+    // Разбиваем путь на части, учитывая точки и квадратные скобки
+    const parts = path.replace(/\[(\w+)\]/g, ".$1").replace(/^\./, "").split(".");
+    let current: any = obj;
+
+    for (const part of parts) {
+        if (isNullish(current) || typeof current !== 'object' || !(part in current)) {
+            return undefined;
+        }
+        current = current[part];
+    }
+
+    return current;
+}
+
+/**
+ * Checks if object has property at path
+ * @param obj - Source object
+ * @param path - Path to property (e.g. "user.address.street" or "users[0].name")
+ * @returns true if path exists, false otherwise
+ */
+export function has(obj: object, path: string): boolean {
+    return get(obj, path) !== undefined;
+}
+
