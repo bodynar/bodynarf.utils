@@ -11,11 +11,57 @@ export class HttpError extends Error {
     /**
      * Create an instance of `HttpError`
      * @param response Fetch response
+     * @example
+     * ```typescript
+     * const response = new Response(null, { status: 404, statusText: "Not Found" });
+     * const error = new HttpError(response);
+     * console.log(error.status); // 404
+     * console.log(error.statusText); // "Not Found"
+     * ```
      */
     constructor(
         public response: Response
     ) {
-        super(`Fetch error ${response.status}`);
+        super(`HTTP Error: ${response.status} ${response.statusText}`);
+    }
+
+    /**
+     * Get the HTTP status code
+     * @example
+     * ```typescript
+     * const response = new Response(null, { status: 404, statusText: "Not Found" });
+     * const error = new HttpError(response);
+     * console.log(error.status); // 404
+     * ```
+     */
+    get status(): number {
+        return this.response.status;
+    }
+
+    /**
+     * Get the HTTP status text
+     * @example
+     * ```typescript
+     * const response = new Response(null, { status: 404, statusText: "Not Found" });
+     * const error = new HttpError(response);
+     * console.log(error.statusText); // "Not Found"
+     * ```
+     */
+    get statusText(): string {
+        return this.response.statusText;
+    }
+
+    /**
+     * Get the response URL
+     * @example
+     * ```typescript
+     * const response = new Response(null, { status: 404, statusText: "Not Found", url: "https://api.example.com/data" });
+     * const error = new HttpError(response);
+     * console.log(error.url); // "https://api.example.com/data"
+     * ```
+     */
+    get url(): string {
+        return this.response.url;
     }
 }
 

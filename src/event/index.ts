@@ -105,6 +105,17 @@ export class EventEmitter {
      * Subscribe to event
      * @param event Event name
      * @param callback Callback function
+     * @example
+     * ```typescript
+     * const emitter = new EventEmitter();
+     *
+     * emitter.on("data", (data) => {
+     *     console.log("Received data:", data);
+     * });
+     *
+     * emitter.emit("data", { id: 1, value: "test" });
+     * // Logs: "Received data: { id: 1, value: "test" }"
+     * ```
      */
     on(event: string, callback: Function): void {
         if (isNullOrUndefined(this.events[event])) {
@@ -117,6 +128,17 @@ export class EventEmitter {
      * Subscribe to event and unsubscribe after first execution
      * @param event Event name
      * @param callback Callback function
+     * @example
+     * ```typescript
+     * const emitter = new EventEmitter();
+     *
+     * emitter.once("init", () => {
+     *     console.log("Initialized!");
+     * });
+     *
+     * emitter.emit("init"); // Logs: "Initialized!"
+     * emitter.emit("init"); // No log (callback was unsubscribed after first execution)
+     * ```
      */
     once(event: string, callback: Function): void {
         const wrappedCallback = (...args: any[]) => {
@@ -130,6 +152,18 @@ export class EventEmitter {
      * Unsubscribe from event
      * @param event Event name
      * @param callback Callback function
+     * @example
+     * ```typescript
+     * const emitter = new EventEmitter();
+     *
+     * const callback = (data) => console.log("Callback:", data);
+     * emitter.on("test", callback);
+     *
+     * emitter.emit("test", "data"); // Logs: "Callback: data"
+     *
+     * emitter.off("test", callback);
+     * emitter.emit("test", "data"); // No log (callback was unsubscribed)
+     * ```
      */
     off(event: string, callback: Function): void {
         if (isNullOrUndefined(this.events[event])) {
@@ -146,6 +180,17 @@ export class EventEmitter {
      * Emit event
      * @param event Event name
      * @param args Arguments to pass to callbacks
+     * @example
+     * ```typescript
+     * const emitter = new EventEmitter();
+     *
+     * emitter.on("data", (data, extra) => {
+     *     console.log("Received data:", data, extra);
+     * });
+     *
+     * emitter.emit("data", { id: 1 }, "extra info");
+     * // Logs: "Received data: { id: 1 } extra info"
+     * ```
      */
     emit(event: string, ...args: any[]): void {
         if (isNullOrUndefined(this.events[event])) {
@@ -162,6 +207,22 @@ export class EventEmitter {
     /**
      * Remove all listeners for event or all events
      * @param event Event name (optional)
+     * @example
+     * ```typescript
+     * const emitter = new EventEmitter();
+     *
+     * emitter.on("event1", () => console.log("Event 1"));
+     * emitter.on("event2", () => console.log("Event 2"));
+     *
+     * // Remove all listeners for a specific event
+     * emitter.removeAllListeners("event1");
+     * emitter.emit("event1"); // No log
+     * emitter.emit("event2"); // Logs: "Event 2"
+     *
+     * // Remove all listeners for all events
+     * emitter.removeAllListeners();
+     * emitter.emit("event2"); // No log
+     * ```
      */
     removeAllListeners(event?: string): void {
         if (isNullOrUndefined(event)) {

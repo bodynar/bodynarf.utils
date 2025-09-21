@@ -9,6 +9,11 @@ const hashSigns: Array<string> = (() => {
 /**
  * Generate hex-guid
  * @returns Hex-guid
+ * @example
+ * ```typescript
+ * const guid = generateGuid();
+ * console.log(guid); // "a1b2c3d4-e5f6-7890-abcd-ef1234567890" (format may vary)
+ * ```
  */
 export const generateGuid = (): string => {
     const d0 = Math.random() * 0xffffffff | 0;

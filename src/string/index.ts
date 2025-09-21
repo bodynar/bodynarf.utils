@@ -4,6 +4,11 @@ import { isNullish } from "..";
  * Check is string is empty
  * @param value String to check
  * @returns Flag determines that string is empty
+ * @example
+ * ```typescript
+ * isStringEmpty(""); // true
+ * isStringEmpty("hello"); // false
+ * ```
  */
 export const isStringEmpty = (value: string): boolean => {
     return value.length === 0;
@@ -13,6 +18,13 @@ export const isStringEmpty = (value: string): boolean => {
  * Check is value is null or undefined or empty string
  * @param value Value to check
  * @returns Flag is passed value null or undefined or empty string
+ * @example
+ * ```typescript
+ * isNullOrEmpty(null); // true
+ * isNullOrEmpty(undefined); // true
+ * isNullOrEmpty(""); // true
+ * isNullOrEmpty("hello"); // false
+ * ```
  */
 export const isNullOrEmpty = (value?: string | null): boolean => {
     return isNullish(value) || isStringEmpty(value as string);
@@ -114,6 +126,27 @@ export const toSnakeCase = (str: string): string => {
 };
 
 /**
+ * Convert string to kebab-case
+ * @param str String to convert
+ * @returns String in kebab-case format
+ * @example
+ * ```typescript
+ * toKebabCase("hello world"); // "hello-world"
+ * toKebabCase("helloWorld"); // "hello-world"
+ * ```
+ */
+export const toKebabCase = (str: string): string => {
+    if (isNullish(str)) {
+        return "";
+    }
+
+    return str
+        .replace(/([a-z])([A-Z])/g, "$1-$2")
+        .replace(/\s+/g, "-")
+        .replace(/_+/g, "-")
+        .toLowerCase();
+};
+/**
  * Escape HTML special characters
  * @param str String to escape
  * @returns Escaped string
@@ -136,4 +169,4 @@ export const escapeHtml = (str: string): string => {
         .replace(/'/g, "&#039;");
 };
 
-export * from "./extension";
+export * from "./prototype";
