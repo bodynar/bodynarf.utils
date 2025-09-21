@@ -130,9 +130,10 @@ export function isObjectEmpty(obj: object): boolean {
 /**
  * Deep clones an object
  * @param obj - Object to clone
+ * @param visited - Map to track circular references
  * @returns Deep cloned object
  */
-export function deepClone<T>(obj: T): T {
+export function deepClone<T>(obj: T, visited: WeakMap<object, any> = new WeakMap()): T {
     if (isNullish(obj)) {
         return obj;
     }
@@ -141,19 +142,30 @@ export function deepClone<T>(obj: T): T {
         return obj;
     }
 
+    if (visited.has(obj as object)) {
+        return visited.get(obj as object);
+    }
+
     if (obj instanceof Date) {
         return new Date(obj.getTime()) as unknown as T;
     }
 
     if (Array.isArray(obj)) {
-        return obj.map(item => deepClone(item)) as unknown as T;
+        const clonedArr: any[] = [];
+        visited.set(obj as object, clonedArr);
+        for (const item of obj) {
+            clonedArr.push(deepClone(item, visited));
+        }
+        return clonedArr as unknown as T;
     }
 
-    if (typeof obj === "object") {
+    const objAsObject = obj as object;
+    if (typeof objAsObject === "object") {
         const clonedObj = {} as T;
+        visited.set(objAsObject, clonedObj);
         for (const key in obj) {
             if (Object.prototype.hasOwnProperty.call(obj, key)) {
-                clonedObj[key] = deepClone(obj[key]);
+                clonedObj[key] = deepClone((obj as any)[key], visited);
             }
         }
         return clonedObj;

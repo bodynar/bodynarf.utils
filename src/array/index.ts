@@ -194,7 +194,7 @@ if (isNullOrUndefined(Array.prototype.removeByKey)) {
         const keysSet = new Set(keys);
 
         for (let i = this.length - 1; i >= 0; i--) {
-            if (keysSet.has(this[i][key])) {
+            if (!keysSet.has(this[i][key])) {
                 this.splice(i, 1);
             }
         }
@@ -298,14 +298,14 @@ const removeDuplicateByFn = function <TItem extends any, TKey>(array: Array<TIte
         return;
     }
 
-    const seenKeys: Array<any> = [];
+    const seenKeys = new Set<any>();
 
     for (let index = 0; index < array.length; index++) {
         const element = array[index];
         const key = isNullish(keySelector) ? element : keySelector(element);
 
-        if (!seenKeys.includes(key)) {
-            seenKeys.push(key);
+        if (!seenKeys.has(key)) {
+            seenKeys.add(key);
         } else {
             array.splice(index, 1);
             index--;

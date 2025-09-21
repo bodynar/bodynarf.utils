@@ -15,7 +15,28 @@ export class HttpError extends Error {
     constructor(
         public response: Response
     ) {
-        super(`Fetch error ${response.status}`);
+        super(`HTTP Error: ${response.status} ${response.statusText}`);
+    }
+
+    /**
+     * Get the HTTP status code
+     */
+    get status(): number {
+        return this.response.status;
+    }
+
+    /**
+     * Get the HTTP status text
+     */
+    get statusText(): string {
+        return this.response.statusText;
+    }
+
+    /**
+     * Get the response URL
+     */
+    get url(): string {
+        return this.response.url;
     }
 }
 

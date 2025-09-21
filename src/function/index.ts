@@ -30,7 +30,7 @@ export const emptyFn: ActionFn = () => { };
  * @returns Wrapped function
  */
 export const debounce = (fn: Function, delay: number): Function => {
-    let timerId: NodeJS.Timeout;
+    let timerId: NodeJS.Timeout | null = null;
 
     return function(...args: unknown[]) {
         if (!isNullOrUndefined(timerId)) {
@@ -39,6 +39,7 @@ export const debounce = (fn: Function, delay: number): Function => {
 
         timerId = setTimeout(() => {
             fn(...args);
+            timerId = null;
         }, delay);
     };
 };

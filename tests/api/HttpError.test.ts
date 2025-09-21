@@ -13,7 +13,7 @@ describe("HttpError", () => {
 
         expect(error).toBeInstanceOf(HttpError);
         expect(error).toBeInstanceOf(Error);
-        expect(error.message).toBe("Fetch error 404");
+        expect(error.message).toBe("HTTP Error: 404 Not Found");
         expect(error.response).toBe(mockResponse);
     });
 
