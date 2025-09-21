@@ -28,6 +28,9 @@
         "test": "vitest",
         "test:run": "vitest run",
         "test:coverage": "vitest run --coverage",
+        "docs:dev": "vitepress dev docs",
+        "docs:build": "vitepress build docs",
+        "docs:preview": "vitepress preview docs",
         "copy_main": "copyfiles package.json readme.md .npmignore dist",
         "transfer": "npm run copy_main",
         "build_transfer": "npm run build && npm run transfer",
@@ -39,6 +42,7 @@
         "copyfiles": "^2.4.1",
         "jsdom": "^26.1.0",
         "typescript": "^5.0.2",
+        "vitepress": "^1.6.4",
         "vitest": "^0.34.0"
     }
 }
