@@ -6,8 +6,7 @@ export default defineConfig({
 	base: "/bodynarf.utils/",
 	themeConfig: {
 		nav: [
-			{ text: "Home", link: "/" },
-			{ text: "API", link: "/api/" }
+			{ text: "Home", link: "/" }
 		],
 		sidebar: [
 			{
