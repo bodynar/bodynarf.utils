@@ -61,7 +61,7 @@ describe("formatDate", () => {
 	});
 
 	it("should handle single digit seconds correctly with s token", () => {
-		const date = new Date(2023, 5, 15, 14, 30, 5); // 5 секунд
+		const date = new Date(2023, 5, 15, 14, 30, 5); // 5 seconds
 		const result = formatDate(date, "dd.MM.yyyy HH:mm:s");
 		expect(result).toBe("15.06.2023 14:30:5");
 	});
