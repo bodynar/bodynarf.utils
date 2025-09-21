@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 
-// Импортируем файл, чтобы активировать расширение прототипа
+// Import file to activate prototype extension
 import "../../../src/string/prototype";
 
 describe("String.prototype.toCamelCase", () => {
