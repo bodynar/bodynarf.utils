@@ -298,7 +298,7 @@ export function get(obj: object, path: string): any {
         return undefined;
     }
 
-    // Разбиваем путь на части, учитывая точки и квадратные скобки
+    // Split path into parts, considering dots and square brackets
     const parts = path.replace(/\[(\w+)\]/g, ".$1").replace(/^\./, "").split(".");
     let current: any = obj;
 
