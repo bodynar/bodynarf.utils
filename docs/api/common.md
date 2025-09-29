@@ -18,6 +18,20 @@ isNullOrUndefined(""); // false
 isNullOrUndefined(false); // false
 ```
 
+### isNotNullOrUndefined
+
+Checks if a value is defined (not null and not undefined). This is the reverse of isNullOrUndefined.
+
+```typescript
+import { isNotNullOrUndefined } from "@bodynarf/utils";
+
+isNotNullOrUndefined(null); // false
+isNotNullOrUndefined(undefined); // false
+isNotNullOrUndefined(0); // true
+isNotNullOrUndefined(""); // true
+isNotNullOrUndefined(false); // true
+```
+
 ### isNullish
 
 Type guard against nullish values.
@@ -30,6 +44,20 @@ isNullish(undefined); // true
 isNullish(0); // false
 isNullish(""); // false
 isNullish(false); // false
+```
+
+### isNotNullish
+
+Type guard against non-nullish values. This is the reverse of isNullish.
+
+```typescript
+import { isNotNullish } from "@bodynarf/utils";
+
+isNotNullish(null); // false
+isNotNullish(undefined); // false
+isNotNullish(0); // true
+isNotNullish(""); // true
+isNotNullish(false); // true
 ```
 
 ### isNull
@@ -45,6 +73,19 @@ isNull(0); // false
 isNull(""); // false
 ```
 
+### isNotNull
+
+Checks if a value is not null. This is the reverse of isNull.
+
+```typescript
+import { isNotNull } from "@bodynarf/utils";
+
+isNotNull(null); // false
+isNotNull(undefined); // true
+isNotNull(0); // true
+isNotNull(""); // true
+```
+
 ### isUndefined
 
 Checks if a value is undefined.
@@ -56,6 +97,19 @@ isUndefined(undefined); // true
 isUndefined(null); // false
 isUndefined(0); // false
 isUndefined(""); // false
+```
+
+### isNotUndefined
+
+Checks if a value is not undefined. This is the reverse of isUndefined.
+
+```typescript
+import { isNotUndefined } from "@bodynarf/utils";
+
+isNotUndefined(undefined); // false
+isNotUndefined(null); // true
+isNotUndefined(0); // true
+isNotUndefined(""); // true
 ```
 
 ### getValueOrDefault

@@ -1,4 +1,4 @@
-import { Optional, isStringEmpty, isNullOrUndefined, isNullish } from "..";
+import { Optional, isStringEmpty, isNullOrUndefined, isNullish, isNull, isUndefined } from "..";
 
 /**
  * Check is key declared in object. Throws errors if not
@@ -332,5 +332,112 @@ export function get(obj: object, path: string): any {
  */
 export function has(obj: object, path: string): boolean {
     return get(obj, path) !== undefined;
+}
+
+/**
+ * Compares two objects for deep equality without using JSON serialization
+ * @param obj1 - First object to compare
+ * @param obj2 - Second object to compare
+ * @param visited - Set to track circular references
+ * @returns true if objects are deeply equal, false otherwise
+ * @example
+ * ```typescript
+ * const obj1 = { name: "Alice", age: 30, address: { city: "New York" } };
+ * const obj2 = { name: "Alice", age: 30, address: { city: "New York" } };
+ * const obj3 = { name: "Bob", age: 30, address: { city: "New York" } };
+ *
+ * isEqual(obj1, obj2); // true
+ * isEqual(obj1, obj3); // false
+ * ```
+ */
+export function isEqual(obj1: any, obj2: any, visited: WeakMap<object, WeakMap<object, boolean>> = new WeakMap()): boolean {
+    if (obj1 === obj2) {
+        return true;
+    }
+
+    if (isNull(obj1) || isNull(obj2)) {
+        return isNull(obj1) && isNull(obj2);
+    }
+
+    if (isUndefined(obj1) || isUndefined(obj2)) {
+        return isUndefined(obj1) && isUndefined(obj2);
+    }
+
+    if (typeof obj1 !== typeof obj2) {
+        return false;
+    }
+
+    if (typeof obj1 !== 'object' || obj1 === null || obj2 === null) {
+        return obj1 === obj2;
+    }
+
+    if (visited.has(obj1) && visited.get(obj1)?.has(obj2)) {
+        // If we've already compared these objects, return the cached result
+        return visited.get(obj1)?.get(obj2) ?? true;
+    }
+
+    if (!visited.has(obj1)) {
+        visited.set(obj1, new WeakMap());
+    }
+
+    // Mark that we're currently comparing these objects
+    // We use a temporary value of true while comparing
+    visited.get(obj1)?.set(obj2, true);
+
+    try {
+        if (obj1 instanceof Date && obj2 instanceof Date) {
+            const result = obj1.getTime() === obj2.getTime();
+            visited.get(obj1)?.set(obj2, result);
+            return result;
+        }
+
+        if (Array.isArray(obj1) && Array.isArray(obj2)) {
+            if (obj1.length !== obj2.length) {
+                visited.get(obj1)?.set(obj2, false);
+                return false;
+            }
+
+            for (let i = 0; i < obj1.length; i++) {
+                if (!isEqual(obj1[i], obj2[i], visited)) {
+                    visited.get(obj1)?.set(obj2, false);
+                    return false;
+                }
+            }
+
+            visited.get(obj1)?.set(obj2, true);
+            return true;
+        }
+
+        if (Array.isArray(obj1) || Array.isArray(obj2)) {
+            visited.get(obj1)?.set(obj2, false);
+            return false;
+        }
+
+        const keys1 = Object.keys(obj1);
+        const keys2 = Object.keys(obj2);
+
+        if (keys1.length !== keys2.length) {
+            visited.get(obj1)?.set(obj2, false);
+            return false;
+        }
+
+        for (const key of keys1) {
+            if (!Object.prototype.hasOwnProperty.call(obj2, key)) {
+                visited.get(obj1)?.set(obj2, false);
+                return false;
+            }
+
+            if (!isEqual(obj1[key], obj2[key], visited)) {
+                visited.get(obj1)?.set(obj2, false);
+                return false;
+            }
+        }
+
+        visited.get(obj1)?.set(obj2, true);
+        return true;
+    } catch (error) {
+        visited.get(obj1)?.set(obj2, false);
+        return false;
+    }
 }
 

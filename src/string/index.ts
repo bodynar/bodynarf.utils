@@ -31,6 +31,36 @@ export const isNullOrEmpty = (value?: string | null): boolean => {
 };
 
 /**
+ * Check if a string is not empty (reverse of isStringEmpty)
+ * @param value String to check
+ * @returns Flag determines that string is not empty
+ * @example
+ * ```typescript
+ * isStringNotEmpty(""); // false
+ * isStringNotEmpty("hello"); // true
+ * ```
+ */
+export const isStringNotEmpty = (value: string): boolean => {
+    return !isStringEmpty(value);
+};
+
+/**
+ * Check if a value is not null, undefined, or empty string (reverse of isNullOrEmpty)
+ * @param value Value to check
+ * @returns Flag determines that value is not null, undefined, or empty string
+ * @example
+ * ```typescript
+ * isNotNullOrEmpty(null); // false
+ * isNotNullOrEmpty(undefined); // false
+ * isNotNullOrEmpty(""); // false
+ * isNotNullOrEmpty("hello"); // true
+ * ```
+ */
+export const isNotNullOrEmpty = (value?: string | null): boolean => {
+    return !isNullOrEmpty(value);
+};
+
+/**
  * Convert string to URL-friendly format (slug)
  * @param str String to convert
  * @returns URL-friendly string

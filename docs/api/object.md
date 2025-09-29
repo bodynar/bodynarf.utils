@@ -161,3 +161,19 @@ has(obj2, "a[0].b"); // true
 
 const obj3 = { a: 1 };
 has(obj3, "b"); // false
+```
+
+### isEqual
+
+Compares two objects for deep equality without using JSON serialization. This function compares the number of properties, property types, and values recursively.
+
+```typescript
+import { isEqual } from "@bodynarf/utils";
+
+const obj1 = { name: "Alice", age: 30, address: { city: "New York" } };
+const obj2 = { name: "Alice", age: 30, address: { city: "New York" } };
+const obj3 = { name: "Bob", age: 30, address: { city: "New York" } };
+
+isEqual(obj1, obj2); // true
+isEqual(obj1, obj3); // false
+```

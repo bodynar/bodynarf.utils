@@ -43,6 +43,30 @@ declare global {
 		isNullOrEmpty(): boolean;
 
 		/**
+		 * Check if a string is not empty (reverse of isEmpty)
+		 * @returns The flag specifies that the string is not empty
+		 * @example
+		 * ```typescript
+		 * "hello".isNotEmpty(); // true
+		 * "".isNotEmpty(); // false
+		 * ```
+		 */
+		isNotEmpty(): boolean;
+
+		/**
+		 * Check if a string is not nullish or empty (reverse of isNullOrEmpty)
+		 * @returns The flag specifies that the string is not empty, null or undefined
+		 * @example
+		 * ```typescript
+		 * "hello".isNotNullOrEmpty(); // true
+		 * "".isNotNullOrEmpty(); // false
+		 * null.isNotNullOrEmpty(); // false
+		 * undefined.isNotNullOrEmpty(); // false
+		 * ```
+		 */
+		isNotNullOrEmpty(): boolean;
+
+		/**
 		 * Check is string is nullish or empty or white space only
 		 * @returns The flag specifies that the string is empty, null, undefined, or consists only of spaces.
 		 * @example
@@ -115,6 +139,18 @@ if (isNullish(String.prototype.toCamelCase)) {
 if (isNullish(String.prototype.isNullOrEmpty)) {
 	String.prototype.isNullOrEmpty = function () {
 		return isNullish(this) || this.isEmpty();
+	};
+}
+
+if (isNullish(String.prototype.isNotEmpty)) {
+	String.prototype.isNotEmpty = function () {
+		return !this.isEmpty();
+	};
+}
+
+if (isNullish(String.prototype.isNotNullOrEmpty)) {
+	String.prototype.isNotNullOrEmpty = function () {
+		return !this.isNullOrEmpty();
 	};
 }
 

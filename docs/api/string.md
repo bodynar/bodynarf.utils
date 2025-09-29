@@ -28,6 +28,30 @@ isNullOrEmpty(""); // true
 isNullOrEmpty("hello"); // false
 ```
 
+### isStringNotEmpty
+
+Checks if a string is not empty (reverse of isStringEmpty).
+
+```typescript
+import { isStringNotEmpty } from "@bodynarf/utils";
+
+isStringNotEmpty(""); // false
+isStringNotEmpty("hello"); // true
+```
+
+### isNotNullOrEmpty
+
+Checks if a value is not null, undefined, or an empty string (reverse of isNullOrEmpty).
+
+```typescript
+import { isNotNullOrEmpty } from "@bodynarf/utils";
+
+isNotNullOrEmpty(null); // false
+isNotNullOrEmpty(undefined); // false
+isNotNullOrEmpty(""); // false
+isNotNullOrEmpty("hello"); // true
+```
+
 ### slugify
 
 Converts a string to a URL-friendly format (slug).
@@ -152,6 +176,30 @@ import "@bodynarf/utils/string"; // Must be imported to extend the prototype
 null.isNullOrWhiteSpace(); // true
 undefined.isNullOrWhiteSpace(); // true
 "hello".isNullOrWhiteSpace(); // false
+```
+
+### isNotEmpty
+
+Checks if a string is not empty (reverse of isEmpty).
+
+```typescript
+import "@bodynarf/utils/string"; // Must be imported to extend the prototype
+
+"hello".isNotEmpty(); // true
+"".isNotEmpty(); // false
+```
+
+### isNotNullOrEmpty
+
+Checks if a string is not nullish or empty (reverse of isNullOrEmpty).
+
+```typescript
+import "@bodynarf/utils/string"; // Must be imported to extend the prototype
+
+"hello".isNotNullOrEmpty(); // true
+"".isNotNullOrEmpty(); // false
+null.isNotNullOrEmpty(); // false
+undefined.isNotNullOrEmpty(); // false
 ```
 
 ### toKebabCase
