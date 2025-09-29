@@ -48,7 +48,7 @@ isNullish(false); // false
 
 ### isNotNullish
 
-Type guard against non-nullish values. This is the reverse of isNullish.
+Type guard against non-nullish values. This is the reverse of isNullish. Provides improved type safety by narrowing nullable types to their non-nullable counterparts.
 
 ```typescript
 import { isNotNullish } from "@bodynarf/utils";
@@ -58,6 +58,13 @@ isNotNullish(undefined); // false
 isNotNullish(0); // true
 isNotNullish(""); // true
 isNotNullish(false); // true
+
+// Type narrowing example:
+const value: string | null = getStringOrNull();
+if (isNotNullish(value)) {
+  // Here, value is narrowed to string type
+  console.log(value.toUpperCase()); // No TypeScript error
+}
 ```
 
 ### isNull

@@ -48,4 +48,17 @@ describe("isNotNullish", () => {
         expect(isNotNullish(Infinity)).toBe(true);
         expect(isNotNullish(-Infinity)).toBe(true);
     });
+
+    it("should provide type narrowing for nullable types", () => {
+        const value: string | null = "test";
+
+        if (isNotNullish(value)) {
+            // TypeScript should recognize that value is now of type string
+            const upper: string = value.toUpperCase();
+            expect(upper).toBe("TEST");
+        } else {
+            // In this branch, value should be null
+            expect(value).toBe(null);
+        }
+    });
 });

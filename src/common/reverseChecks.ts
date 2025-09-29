@@ -1,4 +1,4 @@
-import { Nullish } from "..";
+import { Nullable } from "..";
 import { isNull, isUndefined, isNullish, isNullOrUndefined } from "./checks";
 
 /**
@@ -48,7 +48,7 @@ export const isNotNullOrUndefined = <T>(value: T): boolean => {
  * This function works as a type predicate, helping TypeScript narrow types.
  * After calling this function, TypeScript will know that the value is not null or undefined.
  */
-export const isNotNullish = (value: unknown): value is Exclude<unknown, Nullish> => {
+export const isNotNullish = <T>(value: Nullable<T>): value is T => {
     return !isNullish(value);
 };
 
