@@ -1,7 +1,7 @@
 import { Optional, isNullish, isStringEmpty } from "..";
 
 /** shortcut to local storage */
-const storage: Storage = window.localStorage;
+const storage: Storage = window?.localStorage;
 
 /**
  * Get flag of existence record in storage
