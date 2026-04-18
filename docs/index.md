@@ -40,6 +40,7 @@ Explore the different sections of the documentation to learn more about the avai
 - [GUID](/api/guid) - GUID generation
 - [LocalStorage](/api/localstorage) - Working with LocalStorage
 - [Promise](/api/promise) - Promise utilities
+- [Validation](/api/validation) - Value validation utilities
 - [API](/api/api) - HTTP request utilities
 
 ## Documentation Generation
