@@ -1,6 +1,6 @@
 import { isNullish } from "../common/checks";
 
-import { toCamelCase, toKebabCase } from "../string";
+import { toCamelCase, toKebabCase } from "./transform";
 
 declare global {
 	interface String {

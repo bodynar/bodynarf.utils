@@ -4,7 +4,9 @@ import { escapeHtml } from "../../src/string";
 
 describe("escapeHtml", () => {
     it("should escape HTML special characters", () => {
-        expect(escapeHtml("<div>Hello & World</div>")).toBe("<div>Hello & World</div>");
+        expect(escapeHtml("<div>Hello & World</div>")).toBe("&lt;div&gt;Hello &amp; World&lt;/div&gt;");
+        expect(escapeHtml('"quoted"')).toBe("&quot;quoted&quot;");
+        expect(escapeHtml("it's fine")).toBe("it&#039;s fine");
     });
 
     it("should handle strings without special characters", () => {
