@@ -60,6 +60,78 @@ getDaysInMonth(2023, 0); // 31 (January 2023)
 getDaysInMonth(2023, 3); // 30 (April 2023)
 ```
 
+### isSameDay
+
+Returns `true` when two `Date` values fall on the same calendar day. Time components are ignored.
+
+```typescript
+import { isSameDay } from "@bodynarf/utils";
+
+isSameDay(new Date(2026, 3, 10, 12, 0), new Date(2026, 3, 10, 23, 59)); // true
+isSameDay(new Date(2026, 3, 10), new Date(2026, 3, 11)); // false
+```
+
+### startOfDay
+
+Returns a new `Date` set to midnight (00:00:00.000) of the given date's local calendar day. The original date is not mutated.
+
+```typescript
+import { startOfDay } from "@bodynarf/utils";
+
+startOfDay(new Date(2026, 3, 10, 15, 30, 0));
+// → new Date(2026, 3, 10, 0, 0, 0, 0)
+```
+
+### getToday
+
+Returns a new `Date` set to the start of the current calendar day (midnight, local time). Equivalent to `startOfDay(new Date())`.
+
+```typescript
+import { getToday } from "@bodynarf/utils";
+
+getToday(); // → new Date(2026, 3, 18, 0, 0, 0, 0)
+```
+
+### getMonthNames
+
+Returns an array of 12 month names localized for the given BCP 47 locale. January is at index 0.
+
+```typescript
+import { getMonthNames } from "@bodynarf/utils";
+
+getMonthNames("en-US", "long");
+// → ["January", "February", ..., "December"]
+
+getMonthNames("en-US", "short");
+// → ["Jan", "Feb", ..., "Dec"]
+
+getMonthNames("ru-RU", "long");
+// → ["январь", "февраль", ..., "декабрь"]
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `locale` | `string` | `"en-US"` | BCP 47 language tag |
+| `format` | `"long" \| "short"` | `"long"` | Display format |
+
+### getWeekdayLabels
+
+Returns an array of 7 short weekday labels starting from **Monday**, localized for the given locale.
+
+```typescript
+import { getWeekdayLabels } from "@bodynarf/utils";
+
+getWeekdayLabels("en-US");
+// → ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+
+getWeekdayLabels("ru-RU");
+// → ["пн", "вт", "ср", "чт", "пт", "сб", "вс"]
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `locale` | `string` | `"en-US"` | BCP 47 language tag |
+
 ## Date Prototype Methods
 
 ### format

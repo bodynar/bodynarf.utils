@@ -2,6 +2,8 @@
 
 Utilities for working with LocalStorage.
 
+> **Note:** All functions are safe to call in non-browser environments (Node.js, SSR, Web Workers). When `window` is not available, write operations are silently ignored and read operations return `false`/`undefined`.
+
 ## Functions
 
 ### hasRecord
