@@ -182,3 +182,17 @@ const arr = [
 const result = arr.withoutDuplicateBy(item => item.id);
 // result is [{ id: 1, name: "Alice" }, { id: 2, name: "Bob" }, { id: 3, name: "Charlie" }]
 // arr is still the original array
+```
+
+### shuffle
+
+Returns a new array with items in random order using the Fisher-Yates algorithm. Does not mutate the original array.
+
+```typescript
+import "@bodynarf/utils/array"; // Must be imported to extend the prototype
+
+const arr = [1, 2, 3, 4, 5];
+const shuffled = arr.shuffle();
+// shuffled is a new array with items in random order
+// arr is still [1, 2, 3, 4, 5]
+```

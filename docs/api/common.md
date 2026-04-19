@@ -2,9 +2,11 @@
 
 General utilities for checking values for null, undefined, and other validations.
 
-## Functions
+## Checks
 
-### isNullOrUndefined
+Functions for checking values against `null`, `undefined`, and other nullish states. Each check has a corresponding reverse function prefixed with `isNot`.
+
+#### isNullOrUndefined
 
 Checks if a value is null or undefined.
 
@@ -131,3 +133,19 @@ getValueOrDefault(undefined, "default"); // "default"
 getValueOrDefault("value", "default"); // "value"
 getValueOrDefault(0, 42); // 0
 getValueOrDefault("", "default"); // ""
+```
+
+## Functions
+
+General-purpose utility functions.
+
+### sleep
+
+Pauses execution for a specified number of milliseconds. Returns a `Promise` that resolves after the delay.
+
+```typescript
+import { sleep } from "@bodynarf/utils";
+
+await sleep(1000); // wait 1 second
+console.log("done");
+```

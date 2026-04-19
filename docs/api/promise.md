@@ -116,3 +116,23 @@ import { delayReject } from "@bodynarf/utils";
 // Reject with "Timeout" error after 1 second
 delayReject(1000, "Timeout")
     .catch(error => console.error(error)); // Logs: "Timeout" after 1 second
+```
+
+### promisify
+
+Converts a Node.js-style callback function (where the last argument is `(error, result)`) into a promise-returning function.
+
+```typescript
+import { promisify } from "@bodynarf/utils";
+
+// Convert a callback-based function
+const readFileAsync = promisify(fs.readFile);
+const content = await readFileAsync("file.txt", "utf8");
+
+// Works with any (error, result) callback pattern
+const callbackFn = (a: number, b: number, cb: (err: any, result?: number) => void) => {
+    cb(null, a + b);
+};
+const asyncFn = promisify<number>(callbackFn);
+const result = await asyncFn(2, 3); // 5
+```

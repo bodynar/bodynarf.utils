@@ -190,3 +190,120 @@ const date2 = new Date(2020, 1, 15); // February 15, 2020 (leap year)
 
 date1.getDaysInMonth(); // 28
 date2.getDaysInMonth(); // 29
+```
+
+## Date Arithmetic
+
+### addDays
+
+Adds a specified number of days to a date. Returns a new `Date` without mutating the original.
+
+```typescript
+import { addDays } from "@bodynarf/utils";
+
+addDays(new Date(2023, 0, 1), 5);  // January 6, 2023
+addDays(new Date(2023, 0, 1), -1); // December 31, 2022
+```
+
+### addMonths
+
+Adds a specified number of months to a date. If the resulting month has fewer days, the day is clamped to the last day of that month.
+
+```typescript
+import { addMonths } from "@bodynarf/utils";
+
+addMonths(new Date(2023, 0, 31), 1);  // February 28, 2023
+addMonths(new Date(2023, 5, 15), -3); // March 15, 2023
+```
+
+### addYears
+
+Adds a specified number of years to a date. Handles Feb 29 → Feb 28 for non-leap target years.
+
+```typescript
+import { addYears } from "@bodynarf/utils";
+
+addYears(new Date(2020, 1, 29), 1); // February 28, 2021
+addYears(new Date(2023, 5, 15), 2); // June 15, 2025
+```
+
+### diffInDays
+
+Calculates the difference in whole days between two dates. Positive if `a` is after `b`.
+
+```typescript
+import { diffInDays } from "@bodynarf/utils";
+
+diffInDays(new Date(2023, 0, 10), new Date(2023, 0, 1)); // 9
+diffInDays(new Date(2023, 0, 1), new Date(2023, 0, 10)); // -9
+```
+
+### diffInMonths
+
+Calculates the difference in whole months between two dates.
+
+```typescript
+import { diffInMonths } from "@bodynarf/utils";
+
+diffInMonths(new Date(2023, 5, 15), new Date(2023, 0, 15)); // 5
+```
+
+### diffInYears
+
+Calculates the difference in whole years between two dates.
+
+```typescript
+import { diffInYears } from "@bodynarf/utils";
+
+diffInYears(new Date(2025, 5, 15), new Date(2020, 5, 15)); // 5
+```
+
+## Date Checks
+
+### isToday
+
+Checks if a date is today.
+
+```typescript
+import { isToday } from "@bodynarf/utils";
+
+isToday(new Date());            // true
+isToday(new Date(2020, 0, 1));  // false
+```
+
+### isTomorrow
+
+Checks if a date is tomorrow.
+
+```typescript
+import { isTomorrow } from "@bodynarf/utils";
+
+const tomorrow = new Date();
+tomorrow.setDate(tomorrow.getDate() + 1);
+isTomorrow(tomorrow); // true
+isTomorrow(new Date()); // false
+```
+
+### isYesterday
+
+Checks if a date is yesterday.
+
+```typescript
+import { isYesterday } from "@bodynarf/utils";
+
+const yesterday = new Date();
+yesterday.setDate(yesterday.getDate() - 1);
+isYesterday(yesterday); // true
+isYesterday(new Date()); // false
+```
+
+### toISODateString
+
+Formats a date as an ISO date string (`YYYY-MM-DD`) using local date components instead of `toISOString()` which converts to UTC.
+
+```typescript
+import { toISODateString } from "@bodynarf/utils";
+
+toISODateString(new Date(2023, 0, 5));   // "2023-01-05"
+toISODateString(new Date(2023, 11, 25)); // "2023-12-25"
+```

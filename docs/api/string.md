@@ -139,6 +139,52 @@ escapeHtml("it's \"fine\"");
 // → "it&#039;s &quot;fine&quot;"
 ```
 
+### unescapeHtml
+
+Unescapes HTML entities (`&amp;`, `&lt;`, `&gt;`, `&quot;`, `&#039;`) back to their original characters. Inverse of `escapeHtml`.
+
+```typescript
+import { unescapeHtml } from "@bodynarf/utils";
+
+unescapeHtml("&lt;div&gt;Hello &amp; World&lt;/div&gt;");
+// → "<div>Hello & World</div>"
+
+unescapeHtml("&#039;Hello&#039; &quot;World&quot;");
+// → "'Hello' \"World\""
+```
+
+### wordCount
+
+Counts the number of words in a string. Words are separated by whitespace.
+
+```typescript
+import { wordCount } from "@bodynarf/utils";
+
+wordCount("Hello World");           // 2
+wordCount("  multiple   spaces  "); // 2
+wordCount("");                       // 0
+wordCount(null);                     // 0
+```
+
+### mask
+
+Masks a string, showing only the last N characters. Useful for hiding sensitive data like card numbers or emails.
+
+```typescript
+import { mask } from "@bodynarf/utils";
+
+mask("1234567890");         // "******7890"
+mask("1234567890", 2);      // "********90"
+mask("1234567890", 4, "#"); // "######7890"
+mask("abc", 4);              // "abc" (shorter than visibleChars)
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `str` | `string` | — | String to mask |
+| `visibleChars` | `number` | `4` | Number of visible characters at the end |
+| `maskChar` | `string` | `"*"` | Character used for masking |
+
 ### getInitials
 
 Extracts two-character uppercase initials from a full display name.
