@@ -223,19 +223,14 @@ export function deepClone<T>(obj: T, visited: WeakMap<object, any> = new WeakMap
         return clonedArr as unknown as T;
     }
 
-    const objAsObject = obj as object;
-    if (typeof objAsObject === "object") {
-        const clonedObj = {} as T;
-        visited.set(objAsObject, clonedObj);
-        for (const key in obj) {
-            if (Object.prototype.hasOwnProperty.call(obj, key)) {
-                clonedObj[key] = deepClone((obj as any)[key], visited);
-            }
+    const clonedObj = {} as T;
+    visited.set(obj as object, clonedObj);
+    for (const key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+            clonedObj[key] = deepClone((obj as any)[key], visited);
         }
-        return clonedObj;
     }
-
-    return obj;
+    return clonedObj;
 }
 
 /**
@@ -367,13 +362,13 @@ export function isEqual(obj1: any, obj2: any, visited: WeakMap<object, WeakMap<o
         return false;
     }
 
-    if (typeof obj1 !== 'object' || obj1 === null || obj2 === null) {
+    if (typeof obj1 !== 'object') {
         return obj1 === obj2;
     }
 
     if (visited.has(obj1) && visited.get(obj1)?.has(obj2)) {
         // If we've already compared these objects, return the cached result
-        return visited.get(obj1)?.get(obj2) ?? true;
+        return visited.get(obj1)!.get(obj2)!;
     }
 
     if (!visited.has(obj1)) {

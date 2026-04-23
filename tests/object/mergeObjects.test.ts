@@ -23,4 +23,16 @@ describe("mergeObjects", () => {
         expect(mergeObjects({} as any, { a: 1 })).toEqual({ a: 1 });
         expect(mergeObjects({ a: 1 }, {} as any)).toEqual({ a: 1 });
     });
+
+    it("should return second object when first is null", () => {
+        const obj2 = { a: 1 };
+        expect(mergeObjects(null as any, obj2)).toBe(obj2);
+        expect(mergeObjects(undefined as any, obj2)).toBe(obj2);
+    });
+
+    it("should return first object when second is null", () => {
+        const obj1 = { a: 1 };
+        expect(mergeObjects(obj1, null as any)).toBe(obj1);
+        expect(mergeObjects(obj1, undefined as any)).toBe(obj1);
+    });
 });

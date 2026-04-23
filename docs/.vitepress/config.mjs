@@ -5,12 +5,13 @@ export default defineConfig({
 	description: "Documentation for @bodynarf/utils library",
 	base: "/bodynarf.utils/",
 	themeConfig: {
+		outline: { level: [2, 3, 4] },
 		nav: [
 			{ text: "Home", link: "/" }
 		],
 		sidebar: [
 			{
-				text: "API",
+				// text: "Utils",
 				items: [
 					{ text: "Common", link: "/api/common" },
 					{ text: "Array", link: "/api/array" },
@@ -22,6 +23,7 @@ export default defineConfig({
 					{ text: "GUID", link: "/api/guid" },
 					{ text: "LocalStorage", link: "/api/localstorage" },
 					{ text: "Promise", link: "/api/promise" },
+					{ text: "Validation", link: "/api/validation" },
 					{ text: "API", link: "/api/api" }
 				]
 			}

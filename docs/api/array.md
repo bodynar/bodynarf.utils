@@ -2,6 +2,22 @@
 
 Utilities for working with arrays, including grouping, filtering, removing duplicates, and other operations.
 
+## Types
+
+### Group
+
+Represents a group of items with a common key.
+
+```typescript
+interface Group<TModel> {
+    /** Key value */
+    key: TModel[keyof TModel];
+
+    /** Group items */
+    items: Array<TModel>;
+}
+```
+
 ## Array Methods
 
 ### groupBy
@@ -87,7 +103,7 @@ arr.removeByFn(item => item % 2 === 0);
 
 ### removeByKey
 
-Removes elements whose keys are not present in the array of allowed keys (mutates the array).
+Removes elements from the array whose keys are present in the provided keys array (mutates the array).
 
 ```typescript
 import "@bodynarf/utils/array"; // Must be imported to extend the prototype
@@ -100,7 +116,7 @@ const arr = [
 ];
 
 arr.removeByKey([1, 3], "id");
-// arr is now [{ id: 1, name: "Alice" }, { id: 3, name: "Charlie" }]
+// arr is now [{ id: 2, name: "Bob" }, { id: 4, name: "David" }]
 ```
 
 ### removeDuplicate
@@ -169,6 +185,11 @@ const result = arr.withoutDuplicate();
 
 Creates a new array from the current one without duplicate values by a specified key selector.
 
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `keySelector` | `(item: T) => TKey` | Function to select key for comparison |
+| `ignoreEmptyValues` | `boolean` | When `true`, items with null/undefined keys are kept regardless of duplicates (default: `false`) |
+
 ```typescript
 import "@bodynarf/utils/array"; // Must be imported to extend the prototype
 
@@ -182,3 +203,28 @@ const arr = [
 const result = arr.withoutDuplicateBy(item => item.id);
 // result is [{ id: 1, name: "Alice" }, { id: 2, name: "Bob" }, { id: 3, name: "Charlie" }]
 // arr is still the original array
+
+// With ignoreEmptyValues: items with null/undefined keys are all preserved
+const arr2 = [
+  { id: 1, name: "Alice" },
+  { id: null, name: "Unknown 1" },
+  { id: 1, name: "Alice Copy" },
+  { id: null, name: "Unknown 2" }
+];
+
+const result2 = arr2.withoutDuplicateBy(item => item.id, true);
+// result2 is [{ id: 1, name: "Alice" }, { id: null, name: "Unknown 1" }, { id: null, name: "Unknown 2" }]
+```
+
+### shuffle
+
+Returns a new array with items in random order using the Fisher-Yates algorithm. Does not mutate the original array.
+
+```typescript
+import "@bodynarf/utils/array"; // Must be imported to extend the prototype
+
+const arr = [1, 2, 3, 4, 5];
+const shuffled = arr.shuffle();
+// shuffled is a new array with items in random order
+// arr is still [1, 2, 3, 4, 5]
+```

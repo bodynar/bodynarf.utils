@@ -1,7 +1,7 @@
 import { Optional, isNullish, isStringEmpty } from "..";
 
-/** shortcut to local storage */
-const storage: Storage = window?.localStorage;
+/** shortcut to local storage; undefined in non-browser environments */
+const storage: Storage | undefined = typeof window !== "undefined" ? window.localStorage : undefined;
 
 /**
  * Get flag of existence record in storage
@@ -18,7 +18,7 @@ const storage: Storage = window?.localStorage;
  * ```
  */
 const hasRecord = (key: string): boolean => {
-    if (isStringEmpty(key)) {
+    if (isStringEmpty(key) || isNullish(storage)) {
         return false;
     }
 
@@ -46,7 +46,7 @@ const hasRecord = (key: string): boolean => {
  * ```
  */
 const getRecord = <TValue>(key: string): Optional<TValue> => {
-    if (isStringEmpty(key)) {
+    if (isStringEmpty(key) || isNullish(storage)) {
         return undefined;
     }
 
@@ -77,7 +77,7 @@ const getRecord = <TValue>(key: string): Optional<TValue> => {
  * ```
  */
 const saveRecord = <TValue>(key: string, value: TValue): void => {
-    if (isStringEmpty(key)) {
+    if (isStringEmpty(key) || isNullish(storage)) {
         return;
     }
 
@@ -103,7 +103,7 @@ const saveRecord = <TValue>(key: string, value: TValue): void => {
  * ```
  */
 const clear = (): void => {
-    storage.clear();
+    storage?.clear();
 }
 
 /** API to access local storage data */

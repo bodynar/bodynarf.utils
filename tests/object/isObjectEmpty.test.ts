@@ -11,4 +11,9 @@ describe("isObjectEmpty", () => {
         expect(isObjectEmpty({ a: 1 })).toBe(false);
         expect(isObjectEmpty({ a: 1, b: 2 })).toBe(false);
     });
+
+    it("should return true for null or undefined", () => {
+        expect(isObjectEmpty(null as any)).toBe(true);
+        expect(isObjectEmpty(undefined as any)).toBe(true);
+    });
 });

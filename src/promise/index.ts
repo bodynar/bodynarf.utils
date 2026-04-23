@@ -202,3 +202,30 @@ export const delayResolve = <TResult>(time: number, result: TResult): Promise<TR
 export const delayReject = <TResult>(time: number, error: string): Promise<TResult> => {
     return new Promise<TResult>((_, reject) => setTimeout(() => reject(error), time));
 };
+
+/**
+ * Convert a Node.js-style callback function into a promise-returning function.
+ * The original function must accept a callback as its last argument with signature `(error, result)`.
+ * @param fn Function with callback as last argument
+ * @returns Promise-returning function
+ * @example
+ * ```typescript
+ * const readFileAsync = promisify(fs.readFile);
+ * const content = await readFileAsync("file.txt", "utf8");
+ * ```
+ */
+export const promisify = <TResult>(
+    fn: (...args: [...any[], (error: any, result?: TResult) => void]) => void,
+): ((...args: any[]) => Promise<TResult>) => {
+    return (...args: any[]): Promise<TResult> => {
+        return new Promise<TResult>((resolve, reject) => {
+            fn(...args, (error: any, result?: TResult) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(result as TResult);
+                }
+            });
+        });
+    };
+};

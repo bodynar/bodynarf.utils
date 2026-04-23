@@ -10,4 +10,5 @@ export * from "./object";
 export * from "./promise";
 export * from "./string";
 export * from "./date";
+export * from "./validation";
 export * from "./types";

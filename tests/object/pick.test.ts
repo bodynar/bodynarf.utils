@@ -18,4 +18,9 @@ describe("pick", () => {
     it("should handle null and undefined", () => {
         expect(pick({} as any, ["a"])).toEqual({});
     });
+
+    it("should return empty object for null input", () => {
+        expect(pick(null as any, ["a", "b"])).toEqual({});
+        expect(pick(undefined as any, ["a"])).toEqual({});
+    });
 });

@@ -60,4 +60,34 @@ describe("EventEmitter", () => {
         expect(callback1).toHaveBeenCalledTimes(1);
         expect(callback2).toHaveBeenCalledTimes(1);
     });
+
+    it("should not throw when calling off on a non-registered event", () => {
+        const emitter = new EventEmitter();
+        const callback = vi.fn();
+
+        expect(() => emitter.off("nonexistent", callback)).not.toThrow();
+    });
+
+    it("should not throw when emitting a non-registered event", () => {
+        const emitter = new EventEmitter();
+
+        expect(() => emitter.emit("nonexistent", "arg")).not.toThrow();
+    });
+
+    it("should remove only listeners for specified event", () => {
+        const emitter = new EventEmitter();
+        const callback1 = vi.fn();
+        const callback2 = vi.fn();
+
+        emitter.on("event1", callback1);
+        emitter.on("event2", callback2);
+
+        emitter.removeAllListeners("event1");
+
+        emitter.emit("event1");
+        emitter.emit("event2");
+
+        expect(callback1).not.toHaveBeenCalled();
+        expect(callback2).toHaveBeenCalledTimes(1);
+    });
 });

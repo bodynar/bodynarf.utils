@@ -49,3 +49,51 @@ export function getDaysInMonth(year: number, month: number): number {
 	const lastDay = new Date(year, month + 1, 0);
 	return lastDay.getDate();
 }
+
+/**
+ * Returns `true` when two Date values fall on the same calendar day.
+ * Year, month and day-of-month are compared; time components are ignored.
+ *
+ * @param a - First date to compare.
+ * @param b - Second date to compare.
+ *
+ * @example
+ * ```typescript
+ * isSameDay(new Date(2026, 3, 10, 12, 0), new Date(2026, 3, 10, 23, 59)); // true
+ * isSameDay(new Date(2026, 3, 10), new Date(2026, 3, 11)); // false
+ * ```
+ */
+export function isSameDay(a: Date, b: Date): boolean {
+	return a.getFullYear() === b.getFullYear()
+		&& a.getMonth() === b.getMonth()
+		&& a.getDate() === b.getDate();
+}
+
+/**
+ * Returns a new Date set to midnight (00:00:00.000) of the given date's local calendar day.
+ * Useful for date-only comparisons that should ignore time.
+ *
+ * @param date - Source date.
+ *
+ * @example
+ * ```typescript
+ * startOfDay(new Date(2026, 3, 10, 15, 30, 0));
+ * // → new Date(2026, 3, 10, 0, 0, 0, 0)
+ * ```
+ */
+export function startOfDay(date: Date): Date {
+	return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+}
+
+/**
+ * Returns a new Date set to the start of the current calendar day (midnight, local time).
+ * Equivalent to `startOfDay(new Date())`.
+ *
+ * @example
+ * ```typescript
+ * getToday(); // → new Date(2026, 3, 18, 0, 0, 0, 0)
+ * ```
+ */
+export function getToday(): Date {
+	return startOfDay(new Date());
+}

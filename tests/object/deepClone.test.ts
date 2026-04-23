@@ -41,4 +41,19 @@ describe("deepClone", () => {
         expect(cloned).not.toBe(arr);
         expect(cloned[2]).not.toBe(arr[2]);
     });
+
+    it("should return null and undefined as-is", () => {
+        expect(deepClone(null)).toBeNull();
+        expect(deepClone(undefined)).toBeUndefined();
+    });
+
+    it("should handle circular references", () => {
+        const obj: any = { name: "Alice" };
+        obj.self = obj;
+
+        const cloned = deepClone(obj);
+
+        expect(cloned.name).toBe("Alice");
+        expect(cloned.self).toBe(cloned);
+    });
 });

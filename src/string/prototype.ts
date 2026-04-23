@@ -1,6 +1,6 @@
 import { isNullish } from "../common/checks";
 
-import { toCamelCase, toKebabCase } from "../string";
+import { toCamelCase, toKebabCase } from "./transform";
 
 declare global {
 	interface String {
@@ -162,10 +162,6 @@ if (isNullish(String.prototype.toKebabCase)) {
 
 if (isNullish(String.prototype.isNullOrWhiteSpace)) {
 	String.prototype.isNullOrWhiteSpace = function () {
-		if (isNullish(this)) {
-			return true;
-		}
-
 		return this.isEmpty() || this.trim().length === 0;
 	};
 }

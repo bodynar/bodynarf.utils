@@ -60,6 +60,78 @@ getDaysInMonth(2023, 0); // 31 (January 2023)
 getDaysInMonth(2023, 3); // 30 (April 2023)
 ```
 
+### isSameDay
+
+Returns `true` when two `Date` values fall on the same calendar day. Time components are ignored.
+
+```typescript
+import { isSameDay } from "@bodynarf/utils";
+
+isSameDay(new Date(2026, 3, 10, 12, 0), new Date(2026, 3, 10, 23, 59)); // true
+isSameDay(new Date(2026, 3, 10), new Date(2026, 3, 11)); // false
+```
+
+### startOfDay
+
+Returns a new `Date` set to midnight (00:00:00.000) of the given date's local calendar day. The original date is not mutated.
+
+```typescript
+import { startOfDay } from "@bodynarf/utils";
+
+startOfDay(new Date(2026, 3, 10, 15, 30, 0));
+// → new Date(2026, 3, 10, 0, 0, 0, 0)
+```
+
+### getToday
+
+Returns a new `Date` set to the start of the current calendar day (midnight, local time). Equivalent to `startOfDay(new Date())`.
+
+```typescript
+import { getToday } from "@bodynarf/utils";
+
+getToday(); // → new Date(2026, 3, 18, 0, 0, 0, 0)
+```
+
+### getMonthNames
+
+Returns an array of 12 month names localized for the given BCP 47 locale. January is at index 0.
+
+```typescript
+import { getMonthNames } from "@bodynarf/utils";
+
+getMonthNames("en-US", "long");
+// → ["January", "February", ..., "December"]
+
+getMonthNames("en-US", "short");
+// → ["Jan", "Feb", ..., "Dec"]
+
+getMonthNames("ru-RU", "long");
+// → ["январь", "февраль", ..., "декабрь"]
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `locale` | `string` | `"en-US"` | BCP 47 language tag |
+| `format` | `"long" \| "short"` | `"long"` | Display format |
+
+### getWeekdayLabels
+
+Returns an array of 7 short weekday labels starting from **Monday**, localized for the given locale.
+
+```typescript
+import { getWeekdayLabels } from "@bodynarf/utils";
+
+getWeekdayLabels("en-US");
+// → ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+
+getWeekdayLabels("ru-RU");
+// → ["пн", "вт", "ср", "чт", "пт", "сб", "вс"]
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `locale` | `string` | `"en-US"` | BCP 47 language tag |
+
 ## Date Prototype Methods
 
 ### format
@@ -118,3 +190,120 @@ const date2 = new Date(2020, 1, 15); // February 15, 2020 (leap year)
 
 date1.getDaysInMonth(); // 28
 date2.getDaysInMonth(); // 29
+```
+
+## Date Arithmetic
+
+### addDays
+
+Adds a specified number of days to a date. Returns a new `Date` without mutating the original.
+
+```typescript
+import { addDays } from "@bodynarf/utils";
+
+addDays(new Date(2023, 0, 1), 5);  // January 6, 2023
+addDays(new Date(2023, 0, 1), -1); // December 31, 2022
+```
+
+### addMonths
+
+Adds a specified number of months to a date. If the resulting month has fewer days, the day is clamped to the last day of that month.
+
+```typescript
+import { addMonths } from "@bodynarf/utils";
+
+addMonths(new Date(2023, 0, 31), 1);  // February 28, 2023
+addMonths(new Date(2023, 5, 15), -3); // March 15, 2023
+```
+
+### addYears
+
+Adds a specified number of years to a date. Handles Feb 29 → Feb 28 for non-leap target years.
+
+```typescript
+import { addYears } from "@bodynarf/utils";
+
+addYears(new Date(2020, 1, 29), 1); // February 28, 2021
+addYears(new Date(2023, 5, 15), 2); // June 15, 2025
+```
+
+### diffInDays
+
+Calculates the difference in whole days between two dates. Positive if `a` is after `b`.
+
+```typescript
+import { diffInDays } from "@bodynarf/utils";
+
+diffInDays(new Date(2023, 0, 10), new Date(2023, 0, 1)); // 9
+diffInDays(new Date(2023, 0, 1), new Date(2023, 0, 10)); // -9
+```
+
+### diffInMonths
+
+Calculates the difference in whole months between two dates.
+
+```typescript
+import { diffInMonths } from "@bodynarf/utils";
+
+diffInMonths(new Date(2023, 5, 15), new Date(2023, 0, 15)); // 5
+```
+
+### diffInYears
+
+Calculates the difference in whole years between two dates.
+
+```typescript
+import { diffInYears } from "@bodynarf/utils";
+
+diffInYears(new Date(2025, 5, 15), new Date(2020, 5, 15)); // 5
+```
+
+## Date Checks
+
+### isToday
+
+Checks if a date is today.
+
+```typescript
+import { isToday } from "@bodynarf/utils";
+
+isToday(new Date());            // true
+isToday(new Date(2020, 0, 1));  // false
+```
+
+### isTomorrow
+
+Checks if a date is tomorrow.
+
+```typescript
+import { isTomorrow } from "@bodynarf/utils";
+
+const tomorrow = new Date();
+tomorrow.setDate(tomorrow.getDate() + 1);
+isTomorrow(tomorrow); // true
+isTomorrow(new Date()); // false
+```
+
+### isYesterday
+
+Checks if a date is yesterday.
+
+```typescript
+import { isYesterday } from "@bodynarf/utils";
+
+const yesterday = new Date();
+yesterday.setDate(yesterday.getDate() - 1);
+isYesterday(yesterday); // true
+isYesterday(new Date()); // false
+```
+
+### toISODateString
+
+Formats a date as an ISO date string (`YYYY-MM-DD`) using local date components instead of `toISOString()` which converts to UTC.
+
+```typescript
+import { toISODateString } from "@bodynarf/utils";
+
+toISODateString(new Date(2023, 0, 5));   // "2023-01-05"
+toISODateString(new Date(2023, 11, 25)); // "2023-12-25"
+```

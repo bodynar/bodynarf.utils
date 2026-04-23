@@ -1,8 +1,20 @@
 # String Utilities
 
-Utilities for working with strings, including formatting, conversion, and validation.
+Utilities for working with strings, including checks, transformation, and formatting.
 
-## Functions
+The module is split into focused files:
+
+| File | Purpose |
+|------|---------|
+| `checks.ts` | Null / empty predicates |
+| `transform.ts` | Case and slug conversions |
+| `format.ts` | Output formatting and escaping |
+| `getInitials.ts` | Initials extraction |
+| `prototype.ts` | `String.prototype` extensions |
+
+All exports are re-exported from the top-level `@bodynarf/utils` package.
+
+## Checks
 
 ### isStringEmpty
 
@@ -52,77 +64,152 @@ isNotNullOrEmpty(""); // false
 isNotNullOrEmpty("hello"); // true
 ```
 
+## Transformation
+
 ### slugify
 
-Converts a string to a URL-friendly format (slug).
+Converts a string to a URL-friendly format (slug). Supports Unicode letters and numbers via `\p{L}` and `\p{N}`.
 
 ```typescript
 import { slugify } from "@bodynarf/utils";
 
 slugify("Hello World!"); // "hello-world"
-slugify("café ñoño"); // "café-ñoño"
-```
-
-### truncate
-
-Truncates a string with ellipsis.
-
-```typescript
-import { truncate } from "@bodynarf/utils";
-
-truncate("Hello World", 8); // "Hello..."
-truncate("Hello World", 8, "---"); // "Hello---"
+slugify("café ñoño");    // "café-ñoño"
 ```
 
 ### toCamelCase
 
-Converts a string to camelCase format.
+Converts a string to `camelCase`.
 
 ```typescript
 import { toCamelCase } from "@bodynarf/utils";
 
 toCamelCase("hello world"); // "helloWorld"
 toCamelCase("hello_world"); // "helloWorld"
+toCamelCase("hello-world"); // "helloWorld"
 ```
 
 ### toSnakeCase
 
-Converts a string to snake_case format.
+Converts a string to `snake_case`.
 
 ```typescript
 import { toSnakeCase } from "@bodynarf/utils";
 
 toSnakeCase("hello world"); // "hello_world"
-toSnakeCase("helloWorld"); // "hello_world"
+toSnakeCase("helloWorld");  // "hello_world"
 ```
 
 ### toKebabCase
 
-Converts a string to kebab-case format.
+Converts a string to `kebab-case`.
 
 ```typescript
 import { toKebabCase } from "@bodynarf/utils";
 
 toKebabCase("hello world"); // "hello-world"
-toKebabCase("helloWorld"); // "hello-world"
+toKebabCase("helloWorld");  // "hello-world"
+```
+
+## Formatting
+
+### truncate
+
+Truncates a string to `maxLength` characters, appending an ellipsis. The total length of the result (including the ellipsis) does not exceed `maxLength`.
+
+```typescript
+import { truncate } from "@bodynarf/utils";
+
+truncate("Hello World", 8);        // "Hello..."
+truncate("Hello World", 8, "---"); // "Hello---"
+truncate("Hi", 10);                // "Hi"
 ```
 
 ### escapeHtml
 
-Escapes special HTML characters.
+Escapes `&`, `<`, `>`, `"`, and `'` to their HTML entity equivalents.
 
 ```typescript
 import { escapeHtml } from "@bodynarf/utils";
 
-escapeHtml("<div>Hello & World</div>"); // "<div>Hello & World</div>"
-escapeHtml("'Hello' " + '"World"'); // "&#039;Hello&#039; "World""
+escapeHtml("<div>Hello & World</div>");
+// → "&lt;div&gt;Hello &amp; World&lt;/div&gt;"
+
+escapeHtml("it's \"fine\"");
+// → "it&#039;s &quot;fine&quot;"
+```
+
+### unescapeHtml
+
+Unescapes HTML entities (`&amp;`, `&lt;`, `&gt;`, `&quot;`, `&#039;`) back to their original characters. Inverse of `escapeHtml`.
+
+```typescript
+import { unescapeHtml } from "@bodynarf/utils";
+
+unescapeHtml("&lt;div&gt;Hello &amp; World&lt;/div&gt;");
+// → "<div>Hello & World</div>"
+
+unescapeHtml("&#039;Hello&#039; &quot;World&quot;");
+// → "'Hello' \"World\""
+```
+
+### wordCount
+
+Counts the number of words in a string. Words are separated by whitespace.
+
+```typescript
+import { wordCount } from "@bodynarf/utils";
+
+wordCount("Hello World");           // 2
+wordCount("  multiple   spaces  "); // 2
+wordCount("");                       // 0
+wordCount(null);                     // 0
+```
+
+### mask
+
+Masks a string, showing only the last N characters. Useful for hiding sensitive data like card numbers or emails.
+
+```typescript
+import { mask } from "@bodynarf/utils";
+
+mask("1234567890");         // "******7890"
+mask("1234567890", 2);      // "********90"
+mask("1234567890", 4, "#"); // "######7890"
+mask("abc", 4);              // "abc" (shorter than visibleChars)
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `str` | `string` | — | String to mask |
+| `visibleChars` | `number` | `4` | Number of visible characters at the end |
+| `maskChar` | `string` | `"*"` | Character used for masking |
+
+### getInitials
+
+Extracts two-character uppercase initials from a full display name.
+All non-letter characters are ignored via Unicode `\p{L}`, so the function works with Latin, Cyrillic, and any other script.
+
+Resolution rules:
+- **Two or more word-tokens** → first letter of the first two tokens.
+- **One token** → first two characters of that token.
+- **No letter content** → `"??"`.
+
+```typescript
+import { getInitials } from "@bodynarf/utils";
+
+getInitials("John Doe")     // "JD"
+getInitials("John")         // "JO"
+getInitials('"Demo" agent') // "DA"
+getInitials("Иван Петров")  // "ИП"
+getInitials("42 !!!")       // "??"
 ```
 
 ## String Prototype Methods
 
 ### format
 
-Formats a string by replacing anchors {0} with function arguments.
+Formats a string by replacing anchors `{0}`, `{1}`, … with the supplied arguments.
 
 ```typescript
 import "@bodynarf/utils/string"; // Must be imported to extend the prototype
@@ -166,15 +253,13 @@ undefined.isNullOrEmpty(); // true
 
 ### isNullOrWhiteSpace
 
-Checks if a string is nullish, empty, or consists only of whitespaces.
+Checks if a string is empty or consists only of whitespaces.
 
 ```typescript
 import "@bodynarf/utils/string"; // Must be imported to extend the prototype
 
 "".isNullOrWhiteSpace(); // true
 "   ".isNullOrWhiteSpace(); // true
-null.isNullOrWhiteSpace(); // true
-undefined.isNullOrWhiteSpace(); // true
 "hello".isNullOrWhiteSpace(); // false
 ```
 

@@ -218,7 +218,33 @@ declare global {
         withoutDuplicateBy<TKey>(keySelector: (item: T) => TKey, ignoreEmptyValues?: boolean): Array<T>;
 
         // #endregion
+
+        /**
+         * Shuffle array items randomly using Fisher-Yates algorithm
+         * @returns New array with items in random order
+         * @example
+         * ```typescript
+         * const arr = [1, 2, 3, 4, 5];
+         * const shuffled = arr.shuffle();
+         * // shuffled is a new array with items in random order
+         * // arr is still [1, 2, 3, 4, 5]
+         * ```
+         */
+        shuffle(): Array<T>;
     }
+}
+
+if (isNullOrUndefined(Array.prototype.shuffle)) {
+    Array.prototype.shuffle = function <T>(): Array<T> {
+        const result = [...this];
+
+        for (let i = result.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [result[i], result[j]] = [result[j], result[i]];
+        }
+
+        return result;
+    };
 }
 
 if (isNullOrUndefined(Array.prototype.groupBy)) {

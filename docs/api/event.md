@@ -23,7 +23,7 @@ initialize(); // not executed
 
 ### throttle
 
-Limits the execution rate of a function.
+Limits the execution rate of a function. If the function is called more frequently than the delay, subsequent calls within the delay window are deferred and executed as a trailing call.
 
 ```typescript
 import { throttle } from "@bodynarf/utils";
@@ -33,10 +33,11 @@ const throttledHandler = throttle((event) => {
     // expensive operation here
 }, 1000);
 
-// This will only execute once per second
+// Executes immediately on first call
 throttledHandler("event1");
-throttledHandler("event2"); // ignored if called within 1 second
-throttledHandler("event3"); // ignored if called within 1 second
+// Subsequent calls within 1 second are deferred to a trailing call
+throttledHandler("event2"); // deferred if called within 1 second
+throttledHandler("event3"); // deferred if called within 1 second
 ```
 
 ## EventEmitter
