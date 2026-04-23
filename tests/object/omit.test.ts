@@ -18,4 +18,9 @@ describe("omit", () => {
     it("should handle null and undefined", () => {
         expect(omit({} as any, ["a"])).toEqual({});
     });
+
+    it("should return empty object for null input", () => {
+        expect(omit(null as any, ["a", "b"])).toEqual({});
+        expect(omit(undefined as any, ["a"])).toEqual({});
+    });
 });

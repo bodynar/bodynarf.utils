@@ -174,4 +174,29 @@ describe("isEqual", () => {
         // These should not be equal because they have different values
         expect(isEqual(obj1, obj2)).toBe(false);
     });
+
+    it("should return false when objects have same key count but different keys", () => {
+        expect(isEqual({ a: 1, b: 2 }, { a: 1, c: 2 })).toBe(false);
+    });
+
+    it("should handle comparison with undefined", () => {
+        expect(isEqual(1, undefined)).toBe(false);
+        expect(isEqual(undefined, 1)).toBe(false);
+    });
+
+    it("should handle error during comparison", () => {
+        const obj1 = new Proxy({}, {
+            ownKeys() { throw new Error("test"); }
+        });
+
+        expect(isEqual(obj1, {})).toBe(false);
+    });
+
+    it("should handle objects sharing the same reference", () => {
+        const shared = { x: 1 };
+        const a = { p: shared, q: shared };
+        const b = { p: { x: 1 }, q: { x: 1 } };
+
+        expect(isEqual(a, b)).toBe(true);
+    });
 });

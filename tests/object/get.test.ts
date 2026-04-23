@@ -36,4 +36,9 @@ describe("get", () => {
         expect(get(obj, null as any)).toBeUndefined();
         expect(get(obj, undefined as any)).toBeUndefined();
     });
+
+    it("should return undefined when intermediate value is null", () => {
+        const obj = { a: null };
+        expect(get(obj as any, "a.b")).toBeUndefined();
+    });
 });

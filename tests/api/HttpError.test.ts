@@ -27,4 +27,38 @@ describe("HttpError", () => {
 
         expect(error.name).toBe("HttpError");
     });
+
+    it("should expose status via getter", () => {
+        const mockResponse = {
+            status: 404,
+            statusText: "Not Found"
+        } as Response;
+
+        const error = new HttpError(mockResponse);
+
+        expect(error.status).toBe(404);
+    });
+
+    it("should expose statusText via getter", () => {
+        const mockResponse = {
+            status: 403,
+            statusText: "Forbidden"
+        } as Response;
+
+        const error = new HttpError(mockResponse);
+
+        expect(error.statusText).toBe("Forbidden");
+    });
+
+    it("should expose url via getter", () => {
+        const mockResponse = {
+            status: 404,
+            statusText: "Not Found",
+            url: "https://api.example.com/data"
+        } as Response;
+
+        const error = new HttpError(mockResponse);
+
+        expect(error.url).toBe("https://api.example.com/data");
+    });
 });

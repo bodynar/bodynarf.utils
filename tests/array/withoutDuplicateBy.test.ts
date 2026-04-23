@@ -39,4 +39,9 @@ describe("Array.prototype.withoutDuplicateBy", () => {
         expect(result[1].id).toBe(2);
         expect(result[2].id).toBe(4);
     });
+
+    it("should return empty array for empty input", () => {
+        const result = ([] as TestItem[]).withoutDuplicateBy(item => item.id);
+        expect(result).toEqual([]);
+    });
 });

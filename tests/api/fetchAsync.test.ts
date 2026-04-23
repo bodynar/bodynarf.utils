@@ -91,4 +91,24 @@ describe("fetchAsync", () => {
             })
         );
     });
+
+    it("should throw HttpError when response is not ok", async () => {
+        const mockResponse = {
+            ok: false,
+            status: 404,
+            statusText: "Not Found"
+        };
+        global.fetch = vi.fn().mockResolvedValue(mockResponse);
+
+        const requestParams = {
+            method: "GET",
+            headers: {
+                "content-type": "application/json"
+            }
+        };
+
+        await expect(
+            fetchAsync("https://api.example.com/test", requestParams)
+        ).rejects.toThrow("HTTP Error: 404 Not Found");
+    });
 });
