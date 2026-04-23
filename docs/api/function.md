@@ -1,6 +1,6 @@
 # Function Utilities
 
-Utilities for working with functions, including debounce, throttle, and other useful functions.
+Utilities for working with functions, including debounce, memoize, and other useful functions.
 
 ## Functions
 

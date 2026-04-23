@@ -85,7 +85,7 @@ Sends an Http request to the specified endpoint to retrieve data in JSON format.
 import { fetchAsync } from "@bodynarf/utils";
 
 // Usage example
-fetchAsync("/api/data")
+fetchAsync("/api/data", { method: "GET", headers: { "content-type": "application/json" } })
     .then(data => console.log(data))
     .catch(error => console.error(error));
 ```
@@ -98,7 +98,7 @@ Sends an Http request to the specified endpoint.
 import { plainFetchAsync } from "@bodynarf/utils";
 
 // Usage example
-plainFetchAsync("/api/data")
+plainFetchAsync("/api/data", { method: "GET", headers: { "content-type": "application/json" } })
     .then(response => console.log(response))
     .catch(error => console.error(error));
 ```
@@ -111,6 +111,23 @@ Sends an Http request to the specified endpoint to retrieve text data.
 import { simpleFetchAsync } from "@bodynarf/utils";
 
 // Usage example
-simpleFetchAsync("/api/text")
+simpleFetchAsync("/api/text", { method: "GET", headers: { "content-type": "text/plain" } })
     .then(text => console.log(text))
     .catch(error => console.error(error));
+```
+
+## Types
+
+### RequestConfiguration
+
+Additional configuration for fetch requests.
+
+```typescript
+type RequestConfiguration = {
+    /** Timeout in seconds. If specified, the request will be aborted after this time. */
+    timeout?: number;
+
+    /** Additional request headers. */
+    headers?: HeadersInit;
+};
+```

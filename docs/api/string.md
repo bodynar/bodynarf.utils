@@ -253,15 +253,13 @@ undefined.isNullOrEmpty(); // true
 
 ### isNullOrWhiteSpace
 
-Checks if a string is nullish, empty, or consists only of whitespaces.
+Checks if a string is empty or consists only of whitespaces.
 
 ```typescript
 import "@bodynarf/utils/string"; // Must be imported to extend the prototype
 
 "".isNullOrWhiteSpace(); // true
 "   ".isNullOrWhiteSpace(); // true
-null.isNullOrWhiteSpace(); // true
-undefined.isNullOrWhiteSpace(); // true
 "hello".isNullOrWhiteSpace(); // false
 ```
 
