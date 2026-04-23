@@ -162,10 +162,6 @@ if (isNullish(String.prototype.toKebabCase)) {
 
 if (isNullish(String.prototype.isNullOrWhiteSpace)) {
 	String.prototype.isNullOrWhiteSpace = function () {
-		if (isNullish(this)) {
-			return true;
-		}
-
 		return this.isEmpty() || this.trim().length === 0;
 	};
 }

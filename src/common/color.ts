@@ -95,10 +95,6 @@ export function hexToRgb(hexColor: string): Optional<Color> {
         };
     }
 
-    if (hexColor.length != 6) {
-        throw new Error("Color must be 3 or 6 symbols long");
-    }
-
     const aRgbHex: RegExpMatchArray =
         hexColor.match(/.{2}/g)!;
 
